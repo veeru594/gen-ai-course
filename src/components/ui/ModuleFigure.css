@@ -1,0 +1,19 @@
+.module-figure {
+  margin: 2rem 0 0.5rem;
+}
+
+.module-figure img {
+  width: 100%;
+  height: auto;
+  /* white background melts into the paper — the sketch looks printed on the page */
+  mix-blend-mode: multiply;
+}
+
+.module-figure-caption {
+  margin-top: 0.4rem;
+  text-transform: none;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 0.4rem;
+}

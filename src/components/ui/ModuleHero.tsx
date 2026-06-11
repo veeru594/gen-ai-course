@@ -1,4 +1,5 @@
 import type { Module } from "../../data/types";
+import { ModuleFigure } from "./ModuleFigure";
 import "./ModuleHero.css";
 
 export function ModuleHero({ module }: { module: Module }) {
@@ -14,6 +15,7 @@ export function ModuleHero({ module }: { module: Module }) {
           <p key={i}>{para}</p>
         ))}
       </div>
+      <ModuleFigure moduleId={module.id} />
     </header>
   );
 }
