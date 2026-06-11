@@ -1,24 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import "./AsciiHero.css";
 
-/* The terminal island as a hero: a student types at a prompt and the model
-   answers the way a model actually answers — one token at a time. */
-
-const GLYPH = [
-  "      ░  ·  ░       █████╗ ██╗   ░      ",
-  "   ·     ░         ██╔══██╗██║      ·   ",
-  "      ░       ·    ███████║██║   ░      ",
-  "  ░      ·         ██╔══██║██║       ·  ",
-  "     ·       ░     ██║  ██║██║  ·       ",
-  "  ·      ░         ╚═╝  ╚═╝╚═╝     ░    ",
-  "           [ next-token predictor ]     ",
-];
-
-const SHIMMER_CHARS = ["░", "▒", "·", "∙"];
+/* The terminal island as a hero: an ASCII bot that visibly speaks —
+   mouth animating while its reply streams in token-sized chunks. */
 
 interface Exchange {
   q: string;
-  // answer pre-split into "tokens" so the reply streams the way replies stream
   a: string[];
 }
 
@@ -39,7 +26,13 @@ const EXCHANGES: Exchange[] = [
     q: "why do you hallucinate?",
     a: ["i", " predict", " plau", "sible", ",", " not", " true", ".", " ground", " me", " with", " RAG", "."],
   },
+  {
+    q: "can you replace engineers?",
+    a: ["no", ".", " i", " make", " the", " ones", " who", " understand", " me", " faster", "."],
+  },
 ];
+
+const MOUTHS = ["▃▃▃▃▃", "▂▃█▃▂", "▂███▂", "▃▂▂▂▃", "▃▃█▃▃"];
 
 type Phase = "typing" | "streaming" | "holding";
 
@@ -54,6 +47,29 @@ function usePrefersReducedMotion(): boolean {
     return () => mq.removeEventListener("change", onChange);
   }, []);
   return reduced;
+}
+
+function buildBot(opts: {
+  speaking: boolean;
+  blink: boolean;
+  frame: number;
+}): string {
+  const { speaking, blink, frame } = opts;
+  const eye = blink ? "─" : "●";
+  const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "▃▃▃▃▃";
+  const tip = speaking ? (frame % 2 === 0 ? "◉" : "○") : "○";
+  const wL = speaking ? "≋" : " ";
+  const wR = speaking ? "≋" : " ";
+  return [
+    `         ${tip}         `,
+    "         │         ",
+    "  ╭─────────────╮  ",
+    ` ─┤   ${eye}     ${eye}   ├─ `,
+    "  │             │  ",
+    ` ${wL}│    ${mouth}    │${wR} `,
+    "  ╰─────────────╯  ",
+    "    ╰──┤ ▪ ▪ ├──╯  ",
+  ].join("\n");
 }
 
 export function AsciiHero() {
@@ -81,7 +97,7 @@ export function AsciiHero() {
       }
     } else if (phase.current === "streaming") {
       if (aTokens < current.a.length) {
-        t = window.setTimeout(() => setATokens((c) => c + 1), 170);
+        t = window.setTimeout(() => setATokens((c) => c + 1), 180);
       } else {
         phase.current = "holding";
         t = window.setTimeout(() => {
@@ -89,58 +105,47 @@ export function AsciiHero() {
           setQChars(0);
           setATokens(0);
           setExchange((e) => (e + 1) % EXCHANGES.length);
-        }, 3400);
+        }, 3200);
       }
     }
     return () => window.clearTimeout(t);
   }, [reduced, exchange, qChars, aTokens]);
 
-  // glyph shimmer
+  // face animation tick (mouth while speaking, periodic blink)
   useEffect(() => {
     if (reduced) {
       return;
     }
-    const id = window.setInterval(() => setFrame((f) => f + 1), 220);
+    const id = window.setInterval(() => setFrame((f) => f + 1), 150);
     return () => window.clearInterval(id);
   }, [reduced]);
 
   const current = EXCHANGES[exchange];
   const question = reduced ? current.q : current.q.slice(0, qChars);
-  const answerTokens = reduced
-    ? current.a
-    : current.a.slice(0, aTokens);
+  const answerTokens = reduced ? current.a : current.a.slice(0, aTokens);
   const questionDone = reduced || qChars >= current.q.length;
   const answerDone = reduced || answerTokens.length >= current.a.length;
-
-  const art = GLYPH.map((line, row) =>
-    line
-      .split("")
-      .map((ch, col) => {
-        if (reduced || !SHIMMER_CHARS.includes(ch)) {
-          return ch;
-        }
-        // cheap deterministic flicker per cell
-        const n = (row * 31 + col * 17 + frame * 7) % SHIMMER_CHARS.length;
-        return (row * 13 + col * 5 + frame) % 4 === 0 ? SHIMMER_CHARS[n] : ch;
-      })
-      .join(""),
-  ).join("\n");
+  const speaking = !reduced && questionDone && !answerDone && aTokens > 0;
+  const blink = !reduced && !speaking && frame % 20 === 0;
 
   return (
-    <section className="ascii-hero" aria-label="Terminal demo: a student asks the model how it works, and the reply streams in one token at a time">
-      <pre className="ascii-hero-art" aria-hidden="true">
-        {art}
-      </pre>
+    <section
+      className="ascii-hero"
+      aria-label="Terminal demo: an ASCII robot answers questions, streaming its reply one token at a time"
+    >
+      <div className="ascii-hero-top" aria-hidden="true">
+        <pre className="ascii-hero-bot">{buildBot({ speaking, blink, frame })}</pre>
+        <p className="ascii-hero-caption">[ next-token predictor ]</p>
+      </div>
+
       <div className="ascii-hero-chat" aria-hidden="true">
         <pre className="ascii-hero-line">
-          <span className="ascii-hero-user">student@course</span>
-          <span className="ascii-hero-dim">:~$ </span>
+          <span className="ascii-hero-user">{"you   ▸ "}</span>
           {question}
           {!questionDone && <span className="ascii-hero-cursor">▌</span>}
         </pre>
         <pre className="ascii-hero-line">
-          <span className="ascii-hero-model">         model</span>
-          <span className="ascii-hero-dim">{">  "}</span>
+          <span className="ascii-hero-model">{"model ▸ "}</span>
           {answerTokens.map((tok, i) => (
             <span key={i} className="ascii-hero-token">
               {tok}
@@ -151,6 +156,12 @@ export function AsciiHero() {
           )}
         </pre>
       </div>
+
+      <p className="ascii-hero-status" aria-hidden="true">
+        <span>T=0.70</span>
+        <span>stream: {speaking ? "▮▮▮" : "idle"}</span>
+        <span>ctx: 200k</span>
+      </p>
     </section>
   );
 }
