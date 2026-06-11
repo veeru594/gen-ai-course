@@ -7,24 +7,19 @@ import "./Home.css";
 export function Home() {
   return (
     <div className="container home">
-      <header className="home-strip">
-        <p className="meta home-strip-program">
-          Automation with Generative AI — NGO Training Program
-        </p>
-        <p className="meta home-strip-hours">
-          {programHours.theory} THEORY / {programHours.employability}{" "}
-          EMPLOYABILITY / {programHours.lab} LAB / {programHours.capstone}{" "}
-          CAPSTONE = {programHours.total} HRS
-        </p>
-      </header>
-
       <div className="home-hero">
         <section className="home-thesis">
+          <p className="meta home-kicker">NGO Training Program</p>
           <h1>
             Understanding first.
             <br />
             Tools second.
           </h1>
+          <p className="meta home-hours">
+            {programHours.theory} THEORY / {programHours.employability}{" "}
+            EMPLOYABILITY / {programHours.lab} LAB / {programHours.capstone}{" "}
+            CAPSTONE = {programHours.total} HRS
+          </p>
           <p>
             A common mistake in AI education is to teach people how to use
             tools without teaching them why those tools behave the way they
