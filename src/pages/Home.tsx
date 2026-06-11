@@ -18,33 +18,38 @@ export function Home() {
         </p>
       </header>
 
-      <AsciiHero />
+      <div className="home-hero">
+        <section className="home-thesis">
+          <h1>
+            Understanding first.
+            <br />
+            Tools second.
+          </h1>
+          <p>
+            A common mistake in AI education is to teach people how to use
+            tools without teaching them why those tools behave the way they
+            do. That approach produces practitioners who can{" "}
+            <Highlight>follow tutorials but cannot adapt</Highlight> when
+            things go wrong.
+          </p>
+          <p>
+            This program takes the opposite approach. Five modules build the
+            understanding — how LLMs actually work, how automation actually
+            fails, how to choose models, how agents decide, how Python glues
+            it together — and{" "}
+            <Highlight>
+              that understanding makes every tool easier to use correctly
+            </Highlight>
+            . The voice throughout is a senior engineer teaching, because{" "}
+            <Highlight>
+              the goal is practitioners, not tool operators
+            </Highlight>
+            .
+          </p>
+        </section>
 
-      <section className="home-thesis">
-        <h1>
-          Understanding first.
-          <br />
-          Tools second.
-        </h1>
-        <p>
-          A common mistake in AI education is to teach people how to use tools
-          without teaching them why those tools behave the way they do. That
-          approach produces practitioners who can{" "}
-          <Highlight>follow tutorials but cannot adapt</Highlight> when things
-          go wrong.
-        </p>
-        <p>
-          This program takes the opposite approach. Five modules build the
-          understanding — how LLMs actually work, how automation actually
-          fails, how to choose models, how agents decide, how Python glues it
-          together — and{" "}
-          <Highlight>
-            that understanding makes every tool easier to use correctly
-          </Highlight>
-          . The voice throughout is a senior engineer teaching, because{" "}
-          <Highlight>the goal is practitioners, not tool operators</Highlight>.
-        </p>
-      </section>
+        <AsciiHero />
+      </div>
 
       <section className="home-path" aria-label="The five modules">
         <h2 className="meta home-path-title">The learning path — 5 modules, 220 theory hours</h2>
