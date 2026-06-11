@@ -1,0 +1,31 @@
+.demo-host {
+  margin: 3rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--module-hue, var(--ink));
+  border-radius: var(--radius-m);
+  background: var(--paper-raise);
+}
+
+.demo-host-tag {
+  color: var(--module-hue, var(--ink-soft));
+  margin-bottom: 0.5rem;
+}
+
+.demo-host-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.demo-host-lede {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .demo-host {
+    padding: 1rem;
+    margin-inline: calc(-1 * var(--gutter) / 2);
+  }
+}

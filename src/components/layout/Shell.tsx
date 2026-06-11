@@ -8,14 +8,18 @@ export function Shell() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Module pages own their titles (their effect runs before this one,
+    // so writing here would clobber it).
+    if (pathname.startsWith("/module/")) {
+      return;
+    }
     const titles: Record<string, string> = {
       "/": "Automation with Generative AI",
       "/playground": "Playground — Automation with Generative AI",
       "/capstone": "Capstone — Automation with Generative AI",
       "/resources": "Resources — Automation with Generative AI",
     };
-    document.title =
-      titles[pathname] ?? "Automation with Generative AI";
+    document.title = titles[pathname] ?? "Automation with Generative AI";
   }, [pathname]);
 
   return (

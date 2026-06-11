@@ -1,0 +1,67 @@
+.exercise {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.exercise:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.exercise-label {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.8rem 0.25rem;
+  cursor: pointer;
+}
+
+.exercise-label input {
+  margin-top: 0.3rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--module-hue, var(--ink));
+  cursor: pointer;
+}
+
+.exercise-label input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.exercise-level {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-s);
+  margin-top: 0.15rem;
+  white-space: nowrap;
+}
+
+.exercise-level-starter {
+  background: var(--paper-sunk);
+  color: var(--ink-soft);
+}
+
+.exercise-level-build {
+  background: var(--module-tint, var(--paper-sunk));
+  color: var(--ink);
+}
+
+.exercise-level-ship {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.exercise-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.exercise.is-done .exercise-text {
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-faint);
+}
