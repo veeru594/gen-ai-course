@@ -1,0 +1,69 @@
+/* Terminal islands inside the paper — the visual thesis of the site. */
+.code-block {
+  margin: 1.75rem 0;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  max-width: 70ch;
+}
+
+.code-block-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0.9rem;
+  border-bottom: 1px solid var(--code-edge);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+.code-block-label {
+  color: var(--code-soft);
+}
+
+.code-block-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.code-block-lang {
+  color: var(--code-accent);
+  text-transform: uppercase;
+}
+
+.code-block-copy {
+  background: transparent;
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-s);
+  color: var(--code-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.55rem;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+.code-block-copy:hover {
+  color: var(--code-ink);
+  border-color: var(--code-soft);
+}
+
+.code-block-copy:focus-visible {
+  box-shadow: 0 0 0 2px var(--code-bg), 0 0 0 4px var(--code-soft);
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--code-ink);
+}
+
+.code-block pre:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--code-soft);
+}

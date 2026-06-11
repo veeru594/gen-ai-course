@@ -1,0 +1,88 @@
+.concept-card {
+  display: block;
+  width: 100%;
+  min-height: 9.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  perspective: 900px;
+}
+
+.concept-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transform-style: preserve-3d;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.concept-card.is-flipped .concept-inner,
+.concept-card:hover .concept-inner,
+.concept-card:focus-visible .concept-inner {
+  transform: rotateX(180deg);
+}
+
+.concept-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--module-hue, var(--ink));
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.concept-front {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.concept-hint {
+  font-size: 0.6rem;
+  color: var(--ink-faint);
+}
+
+.concept-back {
+  transform: rotateX(180deg);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: var(--module-tint, var(--paper-sunk));
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-inner {
+    transform-style: flat;
+  }
+
+  .concept-card.is-flipped .concept-inner,
+  .concept-card:hover .concept-inner,
+  .concept-card:focus-visible .concept-inner {
+    transform: none;
+  }
+
+  .concept-face {
+    transform: none;
+    transition: opacity 0.01ms;
+  }
+
+  .concept-back {
+    opacity: 0;
+  }
+
+  .concept-card.is-flipped .concept-back,
+  .concept-card:hover .concept-back,
+  .concept-card:focus-visible .concept-back {
+    opacity: 1;
+  }
+}

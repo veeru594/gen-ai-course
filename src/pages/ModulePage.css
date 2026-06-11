@@ -1,0 +1,96 @@
+/* thin module-hue rule down the left edge of the page */
+.module-page {
+  border-left: 4px solid var(--module-hue);
+  min-height: 100%;
+}
+
+.module-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 3rem;
+  padding-block: 0 2rem;
+}
+
+.module-content {
+  max-width: 70ch;
+}
+
+.session {
+  padding-block: 2rem 1rem;
+}
+
+.session-title {
+  margin-bottom: 1rem;
+}
+
+.session-para {
+  margin-bottom: 1rem;
+}
+
+.session-topics {
+  margin: 1.5rem 0 0.5rem;
+}
+
+.session-topic-row {
+  display: grid;
+  grid-template-columns: minmax(11rem, 16rem) 1fr;
+  gap: 1.25rem;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+}
+
+.session-topic-row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.session-topic-row dt {
+  font-weight: 600;
+}
+
+.session-topic-row dd {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.module-concepts,
+.module-exercises {
+  padding-block: 2.5rem 1rem;
+}
+
+.module-concepts h2,
+.module-exercises h2 {
+  margin-bottom: 0.4rem;
+}
+
+.module-section-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+.module-concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  gap: 0.9rem;
+}
+
+.module-exercise-list {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .module-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .session-topic-row {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+    padding-block: 0.6rem;
+  }
+}
