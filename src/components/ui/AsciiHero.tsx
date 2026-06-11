@@ -55,20 +55,20 @@ function buildBot(opts: {
   frame: number;
 }): string {
   const { speaking, blink, frame } = opts;
-  const eye = blink ? "─" : "●";
+  const eye = blink ? "▁" : "█";
   const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "▃▃▃▃▃";
-  const tip = speaking ? (frame % 2 === 0 ? "◉" : "○") : "○";
-  const wL = speaking ? "≋" : " ";
-  const wR = speaking ? "≋" : " ";
+  const tip = speaking ? (frame % 2 === 0 ? "●" : "○") : "○";
+  const w = speaking ? "≈" : " ";
+  // every row is exactly 19 columns wide
   return [
     `         ${tip}         `,
     "         │         ",
-    "  ╭─────────────╮  ",
-    ` ─┤   ${eye}     ${eye}   ├─ `,
-    "  │             │  ",
-    ` ${wL}│    ${mouth}    │${wR} `,
-    "  ╰─────────────╯  ",
-    "    ╰──┤ ▪ ▪ ├──╯  ",
+    "  ╔══════╧══════╗  ",
+    `══╣   ${eye}     ${eye}   ╠══`,
+    "  ║             ║  ",
+    ` ${w}║    ${mouth}    ║${w} `,
+    "  ╚═════════════╝  ",
+    "   ═══╡ • • ╞═══   ",
   ].join("\n");
 }
 

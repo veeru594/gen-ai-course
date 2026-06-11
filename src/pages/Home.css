@@ -1,10 +1,14 @@
-.home-strip {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  padding-block: 1rem;
-  border-bottom: 1px solid var(--line);
+.home-kicker {
+  color: var(--ink-faint);
+}
+
+.home-hours {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  background: var(--paper-sunk);
+  border-left: 3px solid var(--mark);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  margin-bottom: 0.5rem;
 }
 
 .home-hero {
