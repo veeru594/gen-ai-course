@@ -36,6 +36,83 @@ const MOUTHS = ["▃▃▃▃▃", "▂▃█▃▂", "▂███▂", "▃▂
 
 type Phase = "typing" | "streaming" | "holding";
 
+const RAIN_CHARS = "01<>{}[]/=+*#$%&;:atoknesrlmpv░▒";
+
+/** Matrix-style token rain on a canvas behind the bot. */
+function useTokenRain(
+  canvasRef: React.RefObject<HTMLCanvasElement>,
+  enabled: boolean,
+) {
+  useEffect(() => {
+    if (!enabled || typeof ResizeObserver === "undefined") {
+      return;
+    }
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) {
+      return;
+    }
+
+    const fontSize = 13;
+    let drops: number[] = [];
+    let raf = 0;
+    let last = 0;
+
+    function resize() {
+      if (!canvas || !ctx) {
+        return;
+      }
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.floor(rect.width));
+      canvas.height = Math.max(1, Math.floor(rect.height));
+      const cols = Math.max(1, Math.floor(canvas.width / fontSize));
+      drops = Array.from({ length: cols }, () =>
+        Math.floor(Math.random() * -60),
+      );
+      ctx.fillStyle = "#16181d";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    resize();
+
+    function frame(t: number) {
+      raf = window.requestAnimationFrame(frame);
+      if (t - last < 75 || !canvas || !ctx) {
+        return;
+      }
+      last = t;
+      // translucent wipe leaves fading trails behind each drop
+      ctx.fillStyle = "rgba(22, 24, 29, 0.16)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = `${fontSize}px "IBM Plex Mono", monospace`;
+      for (let i = 0; i < drops.length; i++) {
+        const y = drops[i] * fontSize;
+        if (y > 0) {
+          const ch = RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
+          ctx.fillStyle =
+            Math.random() < 0.08
+              ? "rgba(255, 226, 74, 0.8)" // the occasional highlighter token
+              : "rgba(126, 224, 163, 0.55)";
+          ctx.fillText(ch, i * fontSize, y);
+        }
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = Math.floor(Math.random() * -30);
+        } else {
+          drops[i]++;
+        }
+      }
+    }
+    raf = window.requestAnimationFrame(frame);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, [canvasRef, enabled]);
+}
+
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -79,6 +156,9 @@ export function AsciiHero() {
   const [aTokens, setATokens] = useState(0);
   const [frame, setFrame] = useState(0);
   const phase = useRef<Phase>("typing");
+  const rainRef = useRef<HTMLCanvasElement>(null);
+
+  useTokenRain(rainRef, !reduced);
 
   // conversation loop
   useEffect(() => {
@@ -133,6 +213,7 @@ export function AsciiHero() {
       className="ascii-hero"
       aria-label="Terminal demo: an ASCII robot answers questions, streaming its reply one token at a time"
     >
+      <canvas className="ascii-hero-rain" ref={rainRef} aria-hidden="true" />
       <div className="ascii-hero-top" aria-hidden="true">
         <pre className="ascii-hero-bot">{buildBot({ speaking, blink, frame })}</pre>
         <p className="ascii-hero-caption">[ next-token predictor ]</p>
