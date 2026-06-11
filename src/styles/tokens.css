@@ -1,0 +1,71 @@
+/* Design tokens — "annotated lecture notes built by an engineer."
+   Paper page, ink text, one highlighter, terminal islands. */
+
+:root {
+  /* surfaces */
+  --paper: #f7f6f2;
+  --paper-raise: #fffefb;
+  --paper-sunk: #efede6;
+  --line: #e0ddd2;
+  --line-strong: #c9c6b9;
+
+  /* ink */
+  --ink: #1a1a1c;
+  --ink-soft: #5d5d63;
+  --ink-faint: #8e8e94;
+
+  /* the signature */
+  --mark: #ffe24a;
+
+  /* terminal islands */
+  --code-bg: #16181d;
+  --code-edge: #2a2d35;
+  --code-ink: #e6e9f0;
+  --code-soft: #98a1b3;
+  --code-accent: #7ee0a3;
+
+  /* module hues — color always MEANS module */
+  --hue-foundations: #d97706;
+  --hue-automation: #0f8a5f;
+  --hue-models: #7c5cd6;
+  --hue-agents: #d6456f;
+  --hue-python: #2563c9;
+
+  /* soft tints of the hues, for tags and chips */
+  --tint-foundations: #f7ead6;
+  --tint-automation: #ddefe7;
+  --tint-models: #e9e3f8;
+  --tint-agents: #f8e0e8;
+  --tint-python: #dde7f8;
+
+  /* status */
+  --ok: #0f8a5f;
+  --fail: #c92f2f;
+
+  /* type */
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  /* scale */
+  --content-max: 1080px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius-s: 4px;
+  --radius-m: 8px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 140ms;
+  --t-med: 280ms;
+
+  /* focus */
+  --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink);
+}
+
+/* per-module scope: set data-module on a wrapper and everything inside
+   can use --module-hue / --module-tint */
+[data-module="foundations"] { --module-hue: var(--hue-foundations); --module-tint: var(--tint-foundations); }
+[data-module="automation"]  { --module-hue: var(--hue-automation);  --module-tint: var(--tint-automation); }
+[data-module="models"]      { --module-hue: var(--hue-models);      --module-tint: var(--tint-models); }
+[data-module="agents"]      { --module-hue: var(--hue-agents);      --module-tint: var(--tint-agents); }
+[data-module="python"]      { --module-hue: var(--hue-python);      --module-tint: var(--tint-python); }
