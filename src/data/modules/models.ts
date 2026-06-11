@@ -241,12 +241,14 @@ export const models: Module = {
       ],
     },
   ],
-  demo: {
-    id: "model-matrix",
-    title: "Pick the task, watch the ranking change",
-    lede: "There is no best model — only a best model for the task in front of you. Switch tasks below and watch capability-fit, cost, and latency re-score live.",
-    afterSession: 4,
-  },
+  demos: [
+    {
+      id: "model-matrix",
+      title: "Pick the task, watch the ranking change",
+      lede: "There is no best model — only a best model for the task in front of you. Switch tasks below and watch capability-fit, cost, and latency re-score live.",
+      afterSession: 4,
+    },
+  ],
   concepts: [
     {
       term: "Extended Thinking",

@@ -76,7 +76,11 @@ export function ModulePage() {
           {module.sessions.map((session, i) => (
             <Fragment key={session.id}>
               <SessionSection session={session} />
-              {module.demo.afterSession === i && <DemoHost spec={module.demo} />}
+              {module.demos
+                .filter((d) => d.afterSession === i)
+                .map((d) => (
+                  <DemoHost key={d.id} spec={d} />
+                ))}
             </Fragment>
           ))}
 

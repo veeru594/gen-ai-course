@@ -362,12 +362,14 @@ print(response.stop_reason, response.usage.input_tokens,
       ],
     },
   ],
-  demo: {
-    id: "contract",
-    title: "Validate the model's output before it hurts you",
-    lede: "A model reply rarely arrives as clean JSON. Run the validation pipeline — strip fences, parse, check schema — and load the broken variants. Output contracts are the thing that keeps automations alive.",
-    afterSession: 4,
-  },
+  demos: [
+    {
+      id: "contract",
+      title: "Validate the model's output before it hurts you",
+      lede: "A model reply rarely arrives as clean JSON. Run the validation pipeline — strip fences, parse, check schema — and load the broken variants. Output contracts are the thing that keeps automations alive.",
+      afterSession: 4,
+    },
+  ],
   concepts: [
     {
       term: "Token",

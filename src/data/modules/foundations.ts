@@ -329,12 +329,20 @@ export const foundations: Module = {
       ],
     },
   ],
-  demo: {
-    id: "tokenizer",
-    title: "See your text the way the model does",
-    lede: "Paste anything. Watch it split into tokens, count them, and price them. The intuition you build here explains context limits and API bills for the rest of the program.",
-    afterSession: 1,
-  },
+  demos: [
+    {
+      id: "tokenizer",
+      title: "See your text the way the model does",
+      lede: "Paste anything. Watch it split into tokens, count them, and price them. The intuition you build here explains context limits and API bills for the rest of the program.",
+      afterSession: 1,
+    },
+    {
+      id: "temperature",
+      title: "Temperature is not a creativity dial",
+      lede: "Eight candidate tokens, fixed logits, one slider. Watch the probability distribution reshape live, then sample from it. Low T always says Paris. High T gets weird — and that moment is the lesson.",
+      afterSession: 2,
+    },
+  ],
   concepts: [
     {
       term: "Transformer",

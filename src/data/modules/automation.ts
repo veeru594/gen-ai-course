@@ -274,12 +274,14 @@ def verify_signature(body: bytes, signature: str) -> bool:
       ],
     },
   ],
-  demo: {
-    id: "workflow",
+  demos: [
+    {
+      id: "workflow",
     title: "Watch a workflow fail well",
-    lede: "Run the pipeline and watch data move. Then break the validate step and watch the same packet route to a dead-letter node instead of corrupting downstream systems. That second run is the whole discipline.",
-    afterSession: 0,
-  },
+      lede: "Run the pipeline and watch data move. Then break the validate step and watch the same packet route to a dead-letter node instead of corrupting downstream systems. That second run is the whole discipline.",
+      afterSession: 0,
+    },
+  ],
   concepts: [
     {
       term: "Trigger",
