@@ -1,0 +1,22 @@
+.playground-head {
+  padding-block: 3rem 1rem;
+}
+
+.playground-head p {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.playground-entry {
+  margin-top: 2.5rem;
+}
+
+.playground-entry-meta a {
+  color: var(--module-hue);
+  text-decoration-color: var(--module-hue);
+}
+
+.playground-entry .demo-host {
+  margin-top: 0.5rem;
+}

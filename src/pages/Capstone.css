@@ -1,0 +1,102 @@
+.capstone-head {
+  padding-block: 3rem 1.5rem;
+}
+
+.capstone-head h1 {
+  margin-block: 0.75rem 1rem;
+}
+
+.capstone-lede {
+  font-size: 1.1rem;
+  max-width: 62ch;
+}
+
+.capstone-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin: 2rem 0 1rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.capstone-step {
+  position: relative;
+  padding: 1rem;
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--ink);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+}
+
+.capstone-step-number {
+  color: var(--ink-faint);
+}
+
+.capstone-step-title {
+  font-size: 1rem;
+  margin-block: 0.4rem 0.5rem;
+}
+
+.capstone-step-body {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.capstone-rubric {
+  padding-block: 2.5rem 1rem;
+}
+
+.capstone-rubric h2 {
+  margin-bottom: 1.25rem;
+}
+
+.capstone-rubric-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+  max-width: 70ch;
+}
+
+.capstone-rubric-list li {
+  padding: 0.7rem 0.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.capstone-rubric-list li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.capstone-rubric-list span {
+  color: var(--ink-soft);
+}
+
+.capstone-note {
+  margin-block: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--mark);
+  background: var(--paper-raise);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  max-width: 70ch;
+}
+
+.capstone-note p {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1000px) {
+  .capstone-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .capstone-flow {
+    grid-template-columns: 1fr;
+  }
+}
