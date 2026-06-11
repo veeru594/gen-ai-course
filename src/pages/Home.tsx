@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { modules, programHours } from "../data/modules";
 import { Highlight } from "../components/ui/Highlight";
+import { AsciiHero } from "../components/ui/AsciiHero";
 import "./Home.css";
 
 export function Home() {
@@ -16,6 +17,8 @@ export function Home() {
           CAPSTONE = {programHours.total} HRS
         </p>
       </header>
+
+      <AsciiHero />
 
       <section className="home-thesis">
         <h1>
