@@ -68,7 +68,7 @@ export interface Module {
   tagline: string;
   intro: string[];
   sessions: Session[];
-  demo: DemoSpec;
+  demos: DemoSpec[];
   concepts: Concept[];
   exercises: Exercise[];
   resources: Resource[];

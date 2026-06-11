@@ -1,0 +1,74 @@
+.workflow-canvas {
+  width: 100%;
+  max-width: 42rem;
+  height: auto;
+  background: var(--paper);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-s);
+}
+
+.workflow-edge {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.workflow-edge-dead {
+  stroke-dasharray: 4 4;
+}
+
+.workflow-node {
+  fill: var(--paper-raise);
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+}
+
+.workflow-node-webhook,
+.workflow-node-validate {
+  stroke: var(--module-hue, var(--ink));
+}
+
+.workflow-node-dead {
+  stroke: var(--fail);
+  fill: var(--paper);
+}
+
+.workflow-node-dead.is-lit {
+  fill: #f8dede;
+}
+
+.workflow-node-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink);
+}
+
+.workflow-packet {
+  fill: var(--module-hue, var(--ink));
+  stroke: var(--paper);
+  stroke-width: 2;
+  transition: transform 600ms var(--ease);
+}
+
+.workflow-packet.is-err {
+  fill: var(--fail);
+}
+
+.workflow-break {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.workflow-break input {
+  accent-color: var(--fail);
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.workflow-break input:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

@@ -304,12 +304,14 @@ invoice_tool = {
       ],
     },
   ],
-  demo: {
-    id: "react-loop",
-    title: "Step through an agent thinking",
-    lede: "Thought, action, observation — click through a real ReAct trace one frame at a time. Then load the second trace and watch an agent loop forever until the max-iterations guard kills it. Failure modes are first-class content here.",
-    afterSession: 0,
-  },
+  demos: [
+    {
+      id: "react-loop",
+      title: "Step through an agent thinking",
+      lede: "Thought, action, observation — click through a real ReAct trace one frame at a time. Then load the second trace and watch an agent loop forever until the max-iterations guard kills it. Failure modes are first-class content here.",
+      afterSession: 0,
+    },
+  ],
   concepts: [
     {
       term: "Agent Loop",

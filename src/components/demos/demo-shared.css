@@ -1,0 +1,120 @@
+/* Shared control styling for all demos. */
+.demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block: 1rem;
+}
+
+.demo-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  color: var(--ink);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.demo-btn:hover {
+  border-color: var(--ink-soft);
+  background: var(--paper-sunk);
+}
+
+.demo-btn[aria-pressed="true"],
+.demo-btn.is-primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.demo-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.demo-note {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-top: 1rem;
+  max-width: 60ch;
+}
+
+.demo-textarea {
+  width: 100%;
+  min-height: 6.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.demo-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-block: 1rem;
+}
+
+.demo-stat {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.demo-stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.demo-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* dark mono log — a small terminal island */
+.demo-log {
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-s);
+  padding: 0.75rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--code-ink);
+  overflow-x: auto;
+  margin-block: 1rem;
+}
+
+.demo-log .log-ok {
+  color: var(--code-accent);
+}
+
+.demo-log .log-err {
+  color: #ff8c8c;
+}
+
+.demo-log .log-dim {
+  color: var(--code-soft);
+}
+
+.demo-range {
+  accent-color: var(--module-hue, var(--ink));
+  width: min(18rem, 100%);
+}
+
+.demo-range:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

@@ -1,0 +1,62 @@
+.react-loop-counter {
+  margin-left: auto;
+}
+
+.react-loop-trace {
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-s);
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.55rem;
+  min-height: 8rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.react-loop-frame {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.react-loop-kind {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding-top: 0.15rem;
+}
+
+.frame-task .react-loop-kind { color: var(--code-soft); }
+.frame-thought .react-loop-kind { color: #ffd479; }
+.frame-action .react-loop-kind { color: #8ab8ff; }
+.frame-observation .react-loop-kind { color: var(--code-accent); }
+.frame-answer .react-loop-kind { color: var(--code-accent); }
+.frame-guard .react-loop-kind { color: #ff8c8c; }
+
+.react-loop-text {
+  color: var(--code-ink);
+  overflow-wrap: anywhere;
+}
+
+.frame-task .react-loop-text {
+  color: var(--code-soft);
+  font-style: italic;
+}
+
+.frame-answer .react-loop-text {
+  color: var(--code-accent);
+  font-weight: 600;
+}
+
+.frame-guard .react-loop-text {
+  color: #ff8c8c;
+}
+
+@media (max-width: 480px) {
+  .react-loop-frame {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+}

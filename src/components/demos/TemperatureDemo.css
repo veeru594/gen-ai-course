@@ -1,0 +1,51 @@
+.temperature-scenario {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.temperature-scenario .meta {
+  margin-right: 0.5rem;
+}
+
+.temperature-blank {
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--module-hue, var(--ink));
+}
+
+.temperature-value {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  min-width: 5.5rem;
+}
+
+.temperature-chart {
+  width: 100%;
+  max-width: 32rem;
+  height: auto;
+}
+
+.temperature-token {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--ink);
+}
+
+.temperature-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-soft);
+}
+
+.temperature-bar {
+  fill: var(--line-strong);
+  transition: width var(--t-med) var(--ease);
+}
+
+.temperature-bar.is-top {
+  fill: var(--module-hue, var(--ink));
+}
+
+.temperature-samples {
+  max-width: 34rem;
+}
