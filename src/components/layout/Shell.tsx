@@ -2,10 +2,22 @@ import { useEffect } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { CommandPalette } from "./CommandPalette";
 import "./Shell.css";
 
 export function Shell() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      return;
+    }
+    // let the page render, then jump to the anchor (palette demo links)
+    const t = window.setTimeout(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView();
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [pathname, hash]);
 
   useEffect(() => {
     // Module pages own their titles (their effect runs before this one,
@@ -32,6 +44,7 @@ export function Shell() {
         <Outlet />
       </main>
       <Footer />
+      <CommandPalette />
       <ScrollRestoration />
     </div>
   );

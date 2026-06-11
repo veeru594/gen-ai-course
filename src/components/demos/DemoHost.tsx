@@ -7,7 +7,7 @@ import "./demo-shared.css";
 export function DemoHost({ spec }: { spec: DemoSpec }) {
   const Demo = demoRegistry[spec.id];
   return (
-    <section className="demo-host" aria-label={spec.title}>
+    <section className="demo-host" id={`demo-${spec.id}`} aria-label={spec.title}>
       <p className="meta demo-host-tag">Interactive — try it</p>
       <h2 className="demo-host-title">{spec.title}</h2>
       <p className="demo-host-lede">{spec.lede}</p>
