@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import "./AsciiHero.css";
 
-/* The terminal island as a hero: an ASCII bot that visibly speaks —
+/* The terminal island as a hero: an ASCII bot that visibly speaks â€”
    mouth animating while its reply streams in token-sized chunks. */
 
 interface Exchange {
@@ -12,7 +12,7 @@ interface Exchange {
 const EXCHANGES: Exchange[] = [
   {
     q: "how do you actually work?",
-    a: ["one", " token", " at", " a", " time", " —", " this", " reply", " included", "."],
+    a: ["one", " token", " at", " a", " time", " â€”", " this", " reply", " included", "."],
   },
   {
     q: "what should i learn first?",
@@ -20,7 +20,7 @@ const EXCHANGES: Exchange[] = [
   },
   {
     q: "which model is best?",
-    a: ["wrong", " question", " —", " best", " for", " which", " task", "?"],
+    a: ["wrong", " question", " â€”", " best", " for", " which", " task", "?"],
   },
   {
     q: "why do you hallucinate?",
@@ -32,86 +32,10 @@ const EXCHANGES: Exchange[] = [
   },
 ];
 
-const MOUTHS = ["▃▃▃▃▃", "▂▃█▃▂", "▂███▂", "▃▂▂▂▃", "▃▃█▃▃"];
+const MOUTHS = ["â–ƒâ–ƒâ–ƒâ–ƒâ–ƒ", "â–‚â–ƒâ–ˆâ–ƒâ–‚", "â–‚â–ˆâ–ˆâ–ˆâ–‚", "â–ƒâ–‚â–‚â–‚â–ƒ", "â–ƒâ–ƒâ–ˆâ–ƒâ–ƒ"];
 
 type Phase = "typing" | "streaming" | "holding";
 
-const RAIN_CHARS = "01<>{}[]/=+*#$%&;:atoknesrlmpv░▒";
-
-/** Matrix-style token rain on a canvas behind the bot. */
-function useTokenRain(
-  canvasRef: React.RefObject<HTMLCanvasElement>,
-  enabled: boolean,
-) {
-  useEffect(() => {
-    if (!enabled || typeof ResizeObserver === "undefined") {
-      return;
-    }
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) {
-      return;
-    }
-
-    const fontSize = 13;
-    let drops: number[] = [];
-    let raf = 0;
-    let last = 0;
-
-    function resize() {
-      if (!canvas || !ctx) {
-        return;
-      }
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.floor(rect.width));
-      canvas.height = Math.max(1, Math.floor(rect.height));
-      const cols = Math.max(1, Math.floor(canvas.width / fontSize));
-      drops = Array.from({ length: cols }, () =>
-        Math.floor(Math.random() * -60),
-      );
-      ctx.fillStyle = "#16181d";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-    resize();
-
-    function frame(t: number) {
-      raf = window.requestAnimationFrame(frame);
-      if (t - last < 75 || !canvas || !ctx) {
-        return;
-      }
-      last = t;
-      // translucent wipe leaves fading trails behind each drop
-      ctx.fillStyle = "rgba(22, 24, 29, 0.16)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = `${fontSize}px "IBM Plex Mono", monospace`;
-      for (let i = 0; i < drops.length; i++) {
-        const y = drops[i] * fontSize;
-        if (y > 0) {
-          const ch = RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)];
-          ctx.fillStyle =
-            Math.random() < 0.08
-              ? "rgba(255, 226, 74, 0.8)" // the occasional highlighter token
-              : "rgba(126, 224, 163, 0.55)";
-          ctx.fillText(ch, i * fontSize, y);
-        }
-        if (y > canvas.height && Math.random() > 0.975) {
-          drops[i] = Math.floor(Math.random() * -30);
-        } else {
-          drops[i]++;
-        }
-      }
-    }
-    raf = window.requestAnimationFrame(frame);
-
-    return () => {
-      window.cancelAnimationFrame(raf);
-      ro.disconnect();
-    };
-  }, [canvasRef, enabled]);
-}
 
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
@@ -132,20 +56,20 @@ function buildBot(opts: {
   frame: number;
 }): string {
   const { speaking, blink, frame } = opts;
-  const eye = blink ? "▁" : "█";
-  const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "▃▃▃▃▃";
-  const tip = speaking ? (frame % 2 === 0 ? "●" : "○") : "○";
-  const w = speaking ? "≈" : " ";
+  const eye = blink ? "â–" : "â–ˆ";
+  const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "â–ƒâ–ƒâ–ƒâ–ƒâ–ƒ";
+  const tip = speaking ? (frame % 2 === 0 ? "â—" : "â—‹") : "â—‹";
+  const w = speaking ? "â‰ˆ" : " ";
   // every row is exactly 19 columns wide
   return [
     `         ${tip}         `,
-    "         │         ",
-    "  ╔══════╧══════╗  ",
-    `══╣   ${eye}     ${eye}   ╠══`,
-    "  ║             ║  ",
-    ` ${w}║    ${mouth}    ║${w} `,
-    "  ╚═════════════╝  ",
-    "   ═══╡ • • ╞═══   ",
+    "         â”‚         ",
+    "  â•”â•â•â•â•â•â•â•§â•â•â•â•â•â•â•—  ",
+    `â•â•â•£   ${eye}     ${eye}   â• â•â•`,
+    "  â•‘             â•‘  ",
+    ` ${w}â•‘    ${mouth}    â•‘${w} `,
+    "  â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•  ",
+    "   â•â•â•â•¡ â€¢ â€¢ â•žâ•â•â•   ",
   ].join("\n");
 }
 
@@ -156,9 +80,6 @@ export function AsciiHero() {
   const [aTokens, setATokens] = useState(0);
   const [frame, setFrame] = useState(0);
   const phase = useRef<Phase>("typing");
-  const rainRef = useRef<HTMLCanvasElement>(null);
-
-  useTokenRain(rainRef, !reduced);
 
   // conversation loop
   useEffect(() => {
@@ -213,23 +134,22 @@ export function AsciiHero() {
       className="ascii-hero"
       aria-label="Terminal demo: an ASCII robot answers questions, streaming its reply one token at a time"
     >
-      <canvas className="ascii-hero-rain" ref={rainRef} aria-hidden="true" />
       <div className="ascii-hero-main">
         <div className="ascii-hero-chat" aria-hidden="true">
           <pre className="ascii-hero-line">
-            <span className="ascii-hero-user">{"you   ▸ "}</span>
+            <span className="ascii-hero-user">{"you   â–¸ "}</span>
             {question}
-            {!questionDone && <span className="ascii-hero-cursor">▌</span>}
+            {!questionDone && <span className="ascii-hero-cursor">â–Œ</span>}
           </pre>
           <pre className="ascii-hero-line">
-            <span className="ascii-hero-model">{"model ▸ "}</span>
+            <span className="ascii-hero-model">{"model â–¸ "}</span>
             {answerTokens.map((tok, i) => (
               <span key={i} className="ascii-hero-token">
                 {tok}
               </span>
             ))}
             {questionDone && !answerDone && (
-              <span className="ascii-hero-cursor">▌</span>
+              <span className="ascii-hero-cursor">â–Œ</span>
             )}
           </pre>
         </div>
@@ -244,7 +164,7 @@ export function AsciiHero() {
 
       <p className="ascii-hero-status" aria-hidden="true">
         <span>T=0.70</span>
-        <span>stream: {speaking ? "▮▮▮" : "idle"}</span>
+        <span>stream: {speaking ? "â–®â–®â–®" : "idle"}</span>
         <span>ctx: 200k</span>
       </p>
     </section>
