@@ -214,28 +214,32 @@ export function AsciiHero() {
       aria-label="Terminal demo: an ASCII robot answers questions, streaming its reply one token at a time"
     >
       <canvas className="ascii-hero-rain" ref={rainRef} aria-hidden="true" />
-      <div className="ascii-hero-top" aria-hidden="true">
-        <pre className="ascii-hero-bot">{buildBot({ speaking, blink, frame })}</pre>
-        <p className="ascii-hero-caption">[ next-token predictor ]</p>
-      </div>
+      <div className="ascii-hero-main">
+        <div className="ascii-hero-chat" aria-hidden="true">
+          <pre className="ascii-hero-line">
+            <span className="ascii-hero-user">{"you   ▸ "}</span>
+            {question}
+            {!questionDone && <span className="ascii-hero-cursor">▌</span>}
+          </pre>
+          <pre className="ascii-hero-line">
+            <span className="ascii-hero-model">{"model ▸ "}</span>
+            {answerTokens.map((tok, i) => (
+              <span key={i} className="ascii-hero-token">
+                {tok}
+              </span>
+            ))}
+            {questionDone && !answerDone && (
+              <span className="ascii-hero-cursor">▌</span>
+            )}
+          </pre>
+        </div>
 
-      <div className="ascii-hero-chat" aria-hidden="true">
-        <pre className="ascii-hero-line">
-          <span className="ascii-hero-user">{"you   ▸ "}</span>
-          {question}
-          {!questionDone && <span className="ascii-hero-cursor">▌</span>}
-        </pre>
-        <pre className="ascii-hero-line">
-          <span className="ascii-hero-model">{"model ▸ "}</span>
-          {answerTokens.map((tok, i) => (
-            <span key={i} className="ascii-hero-token">
-              {tok}
-            </span>
-          ))}
-          {questionDone && !answerDone && (
-            <span className="ascii-hero-cursor">▌</span>
-          )}
-        </pre>
+        <div className="ascii-hero-top" aria-hidden="true">
+          <pre className="ascii-hero-bot">
+            {buildBot({ speaking, blink, frame })}
+          </pre>
+          <p className="ascii-hero-caption">[ next-token predictor ]</p>
+        </div>
       </div>
 
       <p className="ascii-hero-status" aria-hidden="true">
