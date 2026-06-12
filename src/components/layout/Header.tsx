@@ -1,17 +1,26 @@
 import { NavLink, Link } from "react-router-dom";
+import { DrfLogo } from "./DrfLogo";
 import "./Header.css";
-
-const isMac =
-  typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
 
 export function Header() {
   return (
     <header className="site-header">
       <div className="container site-header-inner">
-        <Link to="/" className="brand">
-          <span className="brand-name">Automation with Generative AI</span>
-          <span className="brand-sub meta">540-hr training program</span>
-        </Link>
+        <div className="site-header-brand">
+          <a
+            className="site-header-logo"
+            href="https://www.drreddysfoundation.org/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Dr. Reddy's Foundation"
+          >
+            <DrfLogo />
+          </a>
+          <span className="site-header-divider" aria-hidden="true" />
+          <Link to="/" className="brand">
+            <span className="brand-name">Automation with Generative AI</span>
+          </Link>
+        </div>
         <nav className="site-nav" aria-label="Primary">
           <NavLink to="/" end className="nav-link">
             Modules
@@ -25,17 +34,6 @@ export function Header() {
           <NavLink to="/resources" className="nav-link">
             Resources
           </NavLink>
-          <button
-            type="button"
-            className="palette-hint"
-            onClick={() =>
-              window.dispatchEvent(new CustomEvent("open-command-palette"))
-            }
-            aria-label="Open command palette"
-          >
-            <kbd>{isMac ? "⌘" : "Ctrl"}</kbd>
-            <kbd>K</kbd>
-          </button>
         </nav>
       </div>
     </header>
