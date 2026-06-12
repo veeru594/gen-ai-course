@@ -7,15 +7,7 @@ export function Header() {
     <header className="site-header">
       <div className="container site-header-inner">
         <div className="site-header-brand">
-          <a
-            className="site-header-logo"
-            href="https://www.drreddysfoundation.org/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Dr. Reddy's Foundation"
-          >
-            <DrfLogo />
-          </a>
+          <DrfLogo />
           <span className="site-header-divider" aria-hidden="true" />
           <Link to="/" className="brand">
             <span className="brand-name">Automation with Generative AI</span>
