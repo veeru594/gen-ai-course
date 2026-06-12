@@ -7,25 +7,31 @@ export function DrfLogo() {
     <span className="drf-logo">
       <svg
         className="drf-logo-mark"
-        viewBox="0 0 80 80"
+        viewBox="0 0 100 100"
         role="img"
         aria-label="Dr. Reddy's Foundation logo"
       >
-        <g
-          fill="none"
-          stroke="#1879bf"
-          strokeLinecap="round"
-          transform="rotate(-18 40 40)"
-        >
-          <path d="M 40 6 A 34 34 0 0 0 40 74" strokeWidth="9" />
-          <path d="M 40 22 A 18 18 0 0 0 40 58" strokeWidth="8" />
-        </g>
-        <circle cx="36" cy="34" r="7" fill="#1879bf" />
+        {/* two crescents opening right, around an abstract figure */}
         <path
-          d="M 28 56 Q 36 42 48 47"
+          d="M 72 13 A 43 43 0 1 0 72 87"
           fill="none"
           stroke="#1879bf"
-          strokeWidth="8"
+          strokeWidth="10"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 68 32 A 26 26 0 1 0 68 68"
+          fill="none"
+          stroke="#1879bf"
+          strokeWidth="9"
+          strokeLinecap="round"
+        />
+        <circle cx="47" cy="44" r="8" fill="#1879bf" />
+        <path
+          d="M 38 62 Q 50 52 62 58"
+          fill="none"
+          stroke="#1879bf"
+          strokeWidth="9"
           strokeLinecap="round"
         />
       </svg>
