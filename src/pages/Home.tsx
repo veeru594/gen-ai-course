@@ -109,14 +109,16 @@ export function Home() {
 
       <section className="home-llm" aria-labelledby="home-llm-title">
         <h2 className="meta home-path-title" id="home-llm-title">
-          Inside the machine — one forward pass
+          Inside the machine — and this one is real
         </h2>
         <p className="home-llm-lede">
-          Every reply a model gives is this loop, once per token: the input
-          is split into tokens, mapped to vectors, passed through stacked
-          attention layers, and collapsed into a probability distribution —
-          then one token is sampled and the whole thing runs again.
-          Module 01 spends 50 hours making this diagram second nature.
+          This is not a looping animation. It is a working language model —
+          a tiny one: n-gram statistics learned from this curriculum's own
+          text, computed live in your browser. Seed it with a few words and
+          watch it choose every next token from a genuine probability
+          distribution, append it, and run again. The gap between this and
+          GPT is scale, not kind — which is exactly why Module 01 starts
+          here.
         </p>
         <LlmDiagram />
         <p className="home-llm-link">

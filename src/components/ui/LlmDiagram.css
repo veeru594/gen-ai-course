@@ -159,3 +159,99 @@
   color: var(--module-hue);
   font-weight: 600;
 }
+
+/* controls */
+.lm-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.lm-seed {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 16rem;
+  max-width: 30rem;
+}
+
+.lm-seed input {
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.lm-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lm-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  color: var(--ink);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.lm-btn:hover:not(:disabled) {
+  border-color: var(--ink-soft);
+  background: var(--paper-sunk);
+}
+
+.lm-btn.is-primary {
+  background: var(--module-hue);
+  border-color: var(--module-hue);
+  color: var(--paper);
+}
+
+.lm-btn.is-primary:hover:not(:disabled) {
+  background: var(--module-hue);
+  opacity: 0.9;
+}
+
+.lm-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* the generated text */
+.lm-tape {
+  margin-top: 1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--code-ink);
+  overflow-wrap: anywhere;
+}
+
+.lm-tape-label {
+  color: var(--code-soft);
+}
+
+.lm-tape-cursor {
+  color: var(--mark);
+  animation: lm-cursor-blink 0.9s steps(1) infinite;
+}
+
+@keyframes lm-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
