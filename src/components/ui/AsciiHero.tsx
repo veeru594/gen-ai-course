@@ -1,7 +1,7 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./AsciiHero.css";
 
-/* The terminal island as a hero: an ASCII bot that visibly speaks â€”
+/* The terminal island as a hero: an ASCII bot that visibly speaks —
    mouth animating while its reply streams in token-sized chunks. */
 
 interface Exchange {
@@ -12,7 +12,7 @@ interface Exchange {
 const EXCHANGES: Exchange[] = [
   {
     q: "how do you actually work?",
-    a: ["one", " token", " at", " a", " time", " â€”", " this", " reply", " included", "."],
+    a: ["one", " token", " at", " a", " time", " —", " this", " reply", " included", "."],
   },
   {
     q: "what should i learn first?",
@@ -20,7 +20,7 @@ const EXCHANGES: Exchange[] = [
   },
   {
     q: "which model is best?",
-    a: ["wrong", " question", " â€”", " best", " for", " which", " task", "?"],
+    a: ["wrong", " question", " —", " best", " for", " which", " task", "?"],
   },
   {
     q: "why do you hallucinate?",
@@ -32,10 +32,9 @@ const EXCHANGES: Exchange[] = [
   },
 ];
 
-const MOUTHS = ["â–ƒâ–ƒâ–ƒâ–ƒâ–ƒ", "â–‚â–ƒâ–ˆâ–ƒâ–‚", "â–‚â–ˆâ–ˆâ–ˆâ–‚", "â–ƒâ–‚â–‚â–‚â–ƒ", "â–ƒâ–ƒâ–ˆâ–ƒâ–ƒ"];
+const MOUTHS = ["▃▃▃▃▃", "▂▃█▃▂", "▂███▂", "▃▂▂▂▃", "▃▃█▃▃"];
 
 type Phase = "typing" | "streaming" | "holding";
-
 
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
@@ -56,20 +55,20 @@ function buildBot(opts: {
   frame: number;
 }): string {
   const { speaking, blink, frame } = opts;
-  const eye = blink ? "â–" : "â–ˆ";
-  const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "â–ƒâ–ƒâ–ƒâ–ƒâ–ƒ";
-  const tip = speaking ? (frame % 2 === 0 ? "â—" : "â—‹") : "â—‹";
-  const w = speaking ? "â‰ˆ" : " ";
+  const eye = blink ? "▁" : "█";
+  const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "▃▃▃▃▃";
+  const tip = speaking ? (frame % 2 === 0 ? "●" : "○") : "○";
+  const w = speaking ? "≈" : " ";
   // every row is exactly 19 columns wide
   return [
     `         ${tip}         `,
-    "         â”‚         ",
-    "  â•”â•â•â•â•â•â•â•§â•â•â•â•â•â•â•—  ",
-    `â•â•â•£   ${eye}     ${eye}   â• â•â•`,
-    "  â•‘             â•‘  ",
-    ` ${w}â•‘    ${mouth}    â•‘${w} `,
-    "  â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•  ",
-    "   â•â•â•â•¡ â€¢ â€¢ â•žâ•â•â•   ",
+    "         │         ",
+    "  ╔══════╧══════╗  ",
+    `══╣   ${eye}     ${eye}   ╠══`,
+    "  ║             ║  ",
+    ` ${w}║    ${mouth}    ║${w} `,
+    "  ╚═════════════╝  ",
+    "   ═══╡ • • ╞═══   ",
   ].join("\n");
 }
 
@@ -137,19 +136,19 @@ export function AsciiHero() {
       <div className="ascii-hero-main">
         <div className="ascii-hero-chat" aria-hidden="true">
           <pre className="ascii-hero-line">
-            <span className="ascii-hero-user">{"you   â–¸ "}</span>
+            <span className="ascii-hero-user">{"you   ▸ "}</span>
             {question}
-            {!questionDone && <span className="ascii-hero-cursor">â–Œ</span>}
+            {!questionDone && <span className="ascii-hero-cursor">▌</span>}
           </pre>
           <pre className="ascii-hero-line">
-            <span className="ascii-hero-model">{"model â–¸ "}</span>
+            <span className="ascii-hero-model">{"model ▸ "}</span>
             {answerTokens.map((tok, i) => (
               <span key={i} className="ascii-hero-token">
                 {tok}
               </span>
             ))}
             {questionDone && !answerDone && (
-              <span className="ascii-hero-cursor">â–Œ</span>
+              <span className="ascii-hero-cursor">▌</span>
             )}
           </pre>
         </div>
@@ -164,7 +163,7 @@ export function AsciiHero() {
 
       <p className="ascii-hero-status" aria-hidden="true">
         <span>T=0.70</span>
-        <span>stream: {speaking ? "â–®â–®â–®" : "idle"}</span>
+        <span>stream: {speaking ? "▮▮▮" : "idle"}</span>
         <span>ctx: 200k</span>
       </p>
     </section>
