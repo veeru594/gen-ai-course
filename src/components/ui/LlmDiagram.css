@@ -40,11 +40,72 @@
   stroke: var(--ink-faint);
   stroke-width: 1.2;
   transition: fill var(--t-med) var(--ease), stroke var(--t-med) var(--ease);
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .lm-node.is-active {
   fill: var(--module-hue);
   stroke: var(--module-hue);
+  filter: drop-shadow(0 0 5px var(--module-hue));
+  animation: lm-pop 450ms var(--ease);
+}
+
+@keyframes lm-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.lm-particle {
+  fill: var(--module-hue);
+  filter: drop-shadow(0 0 3px var(--module-hue));
+}
+
+.lm-feedback-arc {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 5 5;
+  transition: stroke var(--t-med) var(--ease);
+}
+
+.lm-feedback-arc.is-on {
+  stroke: var(--module-hue);
+  stroke-width: 1.4;
+}
+
+.lm-feedback-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  fill: var(--ink-faint);
+  transition: fill var(--t-med) var(--ease);
+}
+
+.lm-feedback-label.is-on {
+  fill: var(--module-hue);
+  font-weight: 600;
+}
+
+.lm-feedback-chip rect {
+  fill: var(--module-tint);
+  stroke: var(--module-hue);
+  stroke-width: 1.4;
+  filter: drop-shadow(0 1px 4px rgba(26, 26, 28, 0.25));
+}
+
+.lm-feedback-chip text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink);
 }
 
 .lm-layer-box {
