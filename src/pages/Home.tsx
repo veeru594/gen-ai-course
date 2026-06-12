@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { modules, programHours } from "../data/modules";
+import { programHours } from "../data/modules";
 import { Highlight } from "../components/ui/Highlight";
 import { AsciiHero } from "../components/ui/AsciiHero";
-import { moduleFigures } from "../components/ui/ModuleFigure";
+import { LlmDiagram } from "../components/ui/LlmDiagram";
 import "./Home.css";
 
 const TOOLS = [
@@ -107,28 +107,24 @@ export function Home() {
         <p className="visually-hidden">Tools covered: {TOOLS.join(", ")}</p>
       </section>
 
-      <section className="home-path" aria-label="The five modules">
-        <h2 className="meta home-path-title">The learning path — 5 modules, 220 theory hours</h2>
-        <ol className="home-path-list">
-          {modules.map((m) => (
-            <li key={m.id} data-module={m.id} className="home-path-row">
-              <Link to={`/module/${m.id}`} className="home-path-link">
-                <span className="meta home-path-number">{m.number}</span>
-                <span className="home-path-body">
-                  <span className="home-path-name">{m.title}</span>
-                  <span className="home-path-tagline">{m.tagline}</span>
-                  <span className="meta home-path-hours">{m.hours} HRS</span>
-                </span>
-                <img
-                  className="home-path-thumb"
-                  src={moduleFigures[m.id].src}
-                  alt=""
-                  loading="lazy"
-                />
-              </Link>
-            </li>
-          ))}
-        </ol>
+      <section className="home-llm" aria-labelledby="home-llm-title">
+        <h2 className="meta home-path-title" id="home-llm-title">
+          Inside the machine — one forward pass
+        </h2>
+        <p className="home-llm-lede">
+          Every reply a model gives is this loop, once per token: the input
+          is split into tokens, mapped to vectors, passed through stacked
+          attention layers, and collapsed into a probability distribution —
+          then one token is sampled and the whole thing runs again.
+          Module 01 spends 50 hours making this diagram second nature.
+        </p>
+        <LlmDiagram />
+        <p className="home-llm-link">
+          <Link to="/module/foundations">
+            Start where the machine starts — Module 01: GenAI Foundations
+            &amp; LLM Architecture →
+          </Link>
+        </p>
       </section>
 
       <section className="home-cta" aria-label="Try the playground">

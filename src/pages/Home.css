@@ -137,81 +137,31 @@
   }
 }
 
-.home-path {
-  padding-block: 2.5rem 2rem;
+.home-llm {
+  padding-block: 2.5rem 1rem;
+}
+
+.home-llm-lede {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+  max-width: 68ch;
+}
+
+.home-llm-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.home-llm-link a {
+  font-weight: 600;
+  text-decoration-color: var(--hue-foundations);
+  text-decoration-thickness: 2px;
 }
 
 .home-path-title,
 .home-method-title {
   margin-bottom: 1.25rem;
-}
-
-.home-path-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.home-path-row {
-  border-top: 1px solid var(--line);
-}
-
-.home-path-row:last-child {
-  border-bottom: 1px solid var(--line);
-}
-
-.home-path-link {
-  display: grid;
-  grid-template-columns: auto 1fr 12rem;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0.9rem 0.75rem;
-  text-decoration: none;
-  border-left: 3px solid var(--module-hue);
-  transition: background var(--t-fast) var(--ease);
-}
-
-.home-path-link:hover {
-  background: var(--paper-raise);
-}
-
-.home-path-thumb {
-  width: 100%;
-  height: auto;
-  mix-blend-mode: multiply;
-  transition: transform var(--t-med) var(--ease);
-}
-
-.home-path-link:hover .home-path-thumb {
-  transform: scale(1.06);
-}
-
-.home-path-number {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--module-hue);
-}
-
-.home-path-body {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.home-path-name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-}
-
-.home-path-tagline {
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-  max-width: 64ch;
-}
-
-.home-path-hours {
-  white-space: nowrap;
-  margin-top: 0.3rem;
 }
 
 /* playground CTA — a terminal island as an invitation */
