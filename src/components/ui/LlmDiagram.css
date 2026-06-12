@@ -8,14 +8,15 @@
 }
 
 .lm-edge {
-  stroke: var(--line);
-  stroke-width: 0.7;
-  transition: stroke var(--t-med) var(--ease);
+  stroke: var(--line-strong);
+  transition:
+    stroke var(--t-med) var(--ease),
+    stroke-width 280ms var(--ease),
+    opacity 280ms var(--ease);
 }
 
 .lm-edge.is-active {
   stroke: var(--module-hue);
-  stroke-width: 1.1;
 }
 
 .lm-token {
