@@ -34,8 +34,63 @@
   max-width: 62ch;
 }
 
+/* tools marquee — a slow conveyor of everything the program touches */
+.home-tools {
+  border-block: 1px solid var(--line);
+  padding-block: 0.7rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.home-tools-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  animation: home-tools-scroll 45s linear infinite;
+}
+
+.home-tools-item {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.home-tools-item::after {
+  content: "·";
+  margin-left: 2.5rem;
+  color: var(--line-strong);
+}
+
+@keyframes home-tools-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-tools-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+
+  .home-tools-track .home-tools-item:nth-child(n + 17) {
+    display: none;
+  }
+}
+
 .home-path {
-  padding-block: 2rem;
+  padding-block: 2.5rem 2rem;
 }
 
 .home-path-title,
@@ -59,10 +114,10 @@
 
 .home-path-link {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: baseline;
+  grid-template-columns: auto 1fr 12rem;
+  align-items: center;
   gap: 1.5rem;
-  padding: 1.1rem 0.75rem;
+  padding: 0.9rem 0.75rem;
   text-decoration: none;
   border-left: 3px solid var(--module-hue);
   transition: background var(--t-fast) var(--ease);
@@ -70,6 +125,17 @@
 
 .home-path-link:hover {
   background: var(--paper-raise);
+}
+
+.home-path-thumb {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+  transition: transform var(--t-med) var(--ease);
+}
+
+.home-path-link:hover .home-path-thumb {
+  transform: scale(1.06);
 }
 
 .home-path-number {
@@ -97,6 +163,64 @@
 
 .home-path-hours {
   white-space: nowrap;
+  margin-top: 0.3rem;
+}
+
+/* playground CTA — a terminal island as an invitation */
+.home-cta {
+  margin-block: 2rem 1rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-m);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.home-cta-prompt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--code-soft);
+  margin-bottom: 0.6rem;
+}
+
+.home-cta-user {
+  color: var(--code-accent);
+  font-weight: 600;
+}
+
+.home-cta-cmd {
+  color: var(--code-ink);
+}
+
+.home-cta-body {
+  color: var(--code-soft);
+  font-size: 0.92rem;
+  max-width: 56ch;
+}
+
+.home-cta-btn {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--code-bg);
+  background: var(--mark);
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--radius-s);
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.home-cta-btn:hover {
+  transform: translateY(-2px);
+}
+
+.home-cta-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--code-bg), 0 0 0 4px var(--mark);
 }
 
 .home-method {
@@ -134,7 +258,13 @@
     gap: 0.75rem 1rem;
   }
 
-  .home-path-hours {
-    grid-column: 2;
+  .home-path-thumb {
+    display: none;
+  }
+
+  .home-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
   }
 }

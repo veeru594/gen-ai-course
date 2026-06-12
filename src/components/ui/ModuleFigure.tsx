@@ -12,7 +12,7 @@ interface Figure {
   caption: string;
 }
 
-const FIGURES: Record<ModuleId, Figure> = {
+export const moduleFigures: Record<ModuleId, Figure> = {
   foundations: {
     src: foundationsImg,
     alt: "Sketch of a transformer machine: token blocks labelled auto, ma, tion feed into a multi-head self-attention unit, and a single predicted next-token block comes out the other side",
@@ -45,7 +45,7 @@ const FIGURES: Record<ModuleId, Figure> = {
 };
 
 export function ModuleFigure({ moduleId }: { moduleId: ModuleId }) {
-  const fig = FIGURES[moduleId];
+  const fig = moduleFigures[moduleId];
   return (
     <figure className="module-figure">
       <img src={fig.src} alt={fig.alt} loading="lazy" />

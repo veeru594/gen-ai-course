@@ -2,7 +2,27 @@ import { Link } from "react-router-dom";
 import { modules, programHours } from "../data/modules";
 import { Highlight } from "../components/ui/Highlight";
 import { AsciiHero } from "../components/ui/AsciiHero";
+import { moduleFigures } from "../components/ui/ModuleFigure";
 import "./Home.css";
+
+const TOOLS = [
+  "Python",
+  "Anthropic SDK",
+  "OpenAI SDK",
+  "Claude",
+  "GPT-4o",
+  "o-series",
+  "Gemini",
+  "ElevenLabs",
+  "Make.com",
+  "n8n",
+  "LangChain",
+  "LangGraph",
+  "LlamaIndex",
+  "MCP",
+  "ChromaDB",
+  "requests",
+];
 
 export function Home() {
   return (
@@ -46,6 +66,17 @@ export function Home() {
         <AsciiHero />
       </div>
 
+      <section className="home-tools" aria-label="Tools covered">
+        <div className="home-tools-track" aria-hidden="true">
+          {[...TOOLS, ...TOOLS].map((tool, i) => (
+            <span key={i} className="home-tools-item">
+              {tool}
+            </span>
+          ))}
+        </div>
+        <p className="visually-hidden">Tools covered: {TOOLS.join(", ")}</p>
+      </section>
+
       <section className="home-path" aria-label="The five modules">
         <h2 className="meta home-path-title">The learning path — 5 modules, 220 theory hours</h2>
         <ol className="home-path-list">
@@ -56,12 +87,36 @@ export function Home() {
                 <span className="home-path-body">
                   <span className="home-path-name">{m.title}</span>
                   <span className="home-path-tagline">{m.tagline}</span>
+                  <span className="meta home-path-hours">{m.hours} HRS</span>
                 </span>
-                <span className="meta home-path-hours">{m.hours} HRS</span>
+                <img
+                  className="home-path-thumb"
+                  src={moduleFigures[m.id].src}
+                  alt=""
+                  loading="lazy"
+                />
               </Link>
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="home-cta" aria-label="Try the playground">
+        <div className="home-cta-text">
+          <p className="home-cta-prompt">
+            <span className="home-cta-user">student@course</span>:~${" "}
+            <span className="home-cta-cmd">open /playground</span>
+          </p>
+          <p className="home-cta-body">
+            Don't take the thesis on faith — run it. Six interactive demos:
+            tokenization, temperature, workflow failure, model selection,
+            agent loops, output contracts. No API keys, no network calls,
+            pure client-side.
+          </p>
+        </div>
+        <Link to="/playground" className="home-cta-btn">
+          run the demos →
+        </Link>
       </section>
 
       <section className="home-method" aria-label="How the program teaches">
