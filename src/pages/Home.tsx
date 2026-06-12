@@ -29,8 +29,9 @@ export function Home() {
     <div className="container home">
       <AsciiHero />
 
-      <section className="home-thesis">
-        <p className="meta home-kicker">NGO Training Program</p>
+      <div className="home-thesis-row">
+        <section className="home-thesis">
+          <p className="meta home-kicker">NGO Training Program</p>
           <h1>
             Understanding first.
             <br />
@@ -62,7 +63,38 @@ export function Home() {
             </Highlight>
             .
           </p>
-      </section>
+        </section>
+
+        <aside className="home-outcomes" aria-label="Program outcomes">
+          <h2 className="meta home-outcomes-title">By the end, you can</h2>
+          <ol className="home-outcomes-list">
+            <li>
+              Write Python that calls, chains, and orchestrates AI APIs
+              across providers
+            </li>
+            <li>
+              Explain how LLMs work — tokens, attention, RAG — well enough
+              to make engineering decisions
+            </li>
+            <li>
+              Pick the right model per task across Claude, OpenAI, Gemini,
+              and ElevenLabs
+            </li>
+            <li>
+              Design and ship automation workflows in Make.com and n8n that
+              survive failure
+            </li>
+            <li>
+              Build agents and multi-agent systems with LangChain,
+              LangGraph, LlamaIndex, and MCP
+            </li>
+            <li>
+              Design, document, and maintain complete AI-automation systems
+              in production
+            </li>
+          </ol>
+        </aside>
+      </div>
 
       <section className="home-tools" aria-label="Tools covered">
         <div className="home-tools-track" aria-hidden="true">

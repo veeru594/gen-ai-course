@@ -15,10 +15,62 @@
   margin-top: 2rem;
 }
 
+.home-thesis-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+  gap: 3.5rem;
+  align-items: center;
+  padding-block: 3rem 2.5rem;
+}
+
 .home-thesis {
   display: grid;
   gap: 1.25rem;
-  padding-block: 3rem 2.5rem;
+}
+
+/* outcomes panel — fills the right column with curriculum data */
+.home-outcomes {
+  border-left: 1px solid var(--line-strong);
+  padding-left: 1.75rem;
+}
+
+.home-outcomes-title {
+  margin-bottom: 1rem;
+  color: var(--ink-faint);
+}
+
+.home-outcomes-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: outcome;
+}
+
+.home-outcomes-list li {
+  counter-increment: outcome;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  padding-block: 0.55rem;
+}
+
+.home-outcomes-list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.home-outcomes-list li::before {
+  content: "0" counter(outcome);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--mark);
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-s);
 }
 
 .home-thesis h1 {
@@ -233,6 +285,20 @@
   margin-top: 0.5rem;
   font-size: 0.9rem;
   color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .home-thesis-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home-outcomes {
+    border-left: none;
+    border-top: 1px solid var(--line-strong);
+    padding-left: 0;
+    padding-top: 1.5rem;
+  }
 }
 
 @media (max-width: 720px) {
