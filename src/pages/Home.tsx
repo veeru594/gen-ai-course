@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { programHours } from "../data/modules";
 import { Highlight } from "../components/ui/Highlight";
 import { AsciiHero } from "../components/ui/AsciiHero";
-import { LlmDiagram } from "../components/ui/LlmDiagram";
+import { LlmReveal } from "../components/ui/LlmDiagram";
 import "./Home.css";
 
 const TOOLS = [
@@ -120,7 +120,7 @@ export function Home() {
           GPT is scale, not kind — which is exactly why Module 01 starts
           here.
         </p>
-        <LlmDiagram />
+        <LlmReveal />
         <p className="home-llm-link">
           <Link to="/module/foundations">
             Start where the machine starts — Module 01: GenAI Foundations

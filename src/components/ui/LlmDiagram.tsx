@@ -284,6 +284,7 @@ export function LlmDiagram() {
       toksRef.current = fromTokens;
       setTokens(fromTokens);
       setPred(null);
+      setReason(null);
     }
 
     for (let k = 0; k < n; k++) {
@@ -330,6 +331,7 @@ export function LlmDiagram() {
     setRunning(false);
     setStep(-1);
     setPred(null);
+    setReason(null);
     setSeedText("");
     toksRef.current = ["automation"];
     setTokens(["automation"]);
@@ -345,7 +347,7 @@ export function LlmDiagram() {
   return (
     <figure className="lm-diagram" data-module="foundations">
       <svg
-        viewBox="0 -58 960 432"
+        viewBox="0 -58 960 442"
         role="img"
         aria-label="A working n-gram language model: your input tokens flow through embeddings and transformer layers into a real probability distribution over next tokens; the sampled token is appended and the loop repeats"
       >
@@ -402,10 +404,10 @@ export function LlmDiagram() {
         ))}
 
         {[
-          { x: COL_X.l1, on: step === 2 },
-          { x: COL_X.l2, on: step === 3 },
-          { x: COL_X.l3, on: step === 4 },
-        ].map(({ x, on }) => (
+          { x: COL_X.l1, on: step === 2, name: "LAYER 1" },
+          { x: COL_X.l2, on: step === 3, name: "LAYER 2" },
+          { x: COL_X.l3, on: step === 4, name: "LAYER 3" },
+        ].map(({ x, on, name }) => (
           <g key={x}>
             <rect
               x={x - 28}
@@ -415,6 +417,14 @@ export function LlmDiagram() {
               rx={10}
               className="lm-layer-box"
             />
+            <text
+              x={x}
+              y={LAYER_Y[0] - 36}
+              textAnchor="middle"
+              className={`lm-layer-name${on ? " is-on" : ""}`}
+            >
+              {name}
+            </text>
             {LAYER_Y.map((y, i) => (
               <circle
                 key={y}
@@ -489,6 +499,16 @@ export function LlmDiagram() {
         <text x={COL_X.out + 50} y={350} textAnchor="middle" className="lm-col-label">
           OUTPUT DISTRIBUTION
         </text>
+
+        {/* weight legend */}
+        <g className="lm-legend">
+          <line x1={330} y1={368} x2={358} y2={368} style={{ strokeWidth: 0.5 }} />
+          <line x1={364} y1={368} x2={392} y2={368} style={{ strokeWidth: 1.4 }} />
+          <line x1={398} y1={368} x2={426} y2={368} style={{ strokeWidth: 2.4 }} />
+          <text x={436} y={371}>
+            EDGE THICKNESS = CONNECTION WEIGHT · SHIMMERS WHILE COMPUTING
+          </text>
+        </g>
       </svg>
 
       <div className="lm-controls">
@@ -527,14 +547,51 @@ export function LlmDiagram() {
         </div>
       </div>
 
-      <p className="lm-tape" aria-live="polite">
-        <span className="lm-tape-label">output ▸ </span>
-        {tape}
-        <span className="lm-tape-cursor">▌</span>
-      </p>
+      <div className="lm-readout">
+        <p className="lm-tape" aria-live="polite">
+          <span className="lm-tape-label">output ▸ </span>
+          {tape}
+          <span className="lm-tape-cursor">▌</span>
+        </p>
+
+        <aside className="lm-reason" aria-label="How the model decided">
+          <h3 className="lm-reason-title">how it decided — live</h3>
+          {reason ? (
+            <ol className="lm-reason-steps">
+              <li className={step >= 0 && step <= 1 ? "is-now" : ""}>
+                <span className="lm-reason-tag">read</span>
+                context is the last {reason.context.includes(" ") ? "2 tokens" : "token"}:
+                “{reason.context}”
+              </li>
+              <li className={step >= 2 && step <= 3 ? "is-now" : ""}>
+                <span className="lm-reason-tag">recall</span>
+                {reason.source === "corpus"
+                  ? "context not found in the curriculum — falling back to its most common words"
+                  : `that phrase appears ${reason.occurrences}× in the curriculum, followed by ${reason.options} different word${reason.options === 1 ? "" : "s"}`}
+              </li>
+              <li className={step === 4 ? "is-now" : ""}>
+                <span className="lm-reason-tag">weigh</span>
+                counts become probabilities — recently used words penalised ×0.2
+              </li>
+              <li className={step === 5 ? "is-now" : ""}>
+                <span className="lm-reason-tag">sample</span>
+                {pred && step >= 5
+                  ? `weighted die landed on “${pred.sampled}” (p=${Math.round(pred.sampledP * 100)}%) — append it, run again`
+                  : "rolling the weighted die…"}
+              </li>
+            </ol>
+          ) : (
+            <p className="lm-reason-empty">
+              run a pass and this panel narrates every decision the model
+              makes — nothing in here is hidden or faked.
+            </p>
+          )}
+        </aside>
+      </div>
 
       <figcaption className="lm-caption">
         {pred ? (
+          /* keep last sample readable after the pass settles */
           <span className={`lm-sampled${out ? " is-on" : ""}`}>
             sampled “{pred.sampled}” — p={Math.round(pred.sampledP * 100)}%,{" "}
             {pred.source === "corpus"
@@ -550,5 +607,52 @@ export function LlmDiagram() {
         )}
       </figcaption>
     </figure>
+  );
+}
+
+/* Collapsed by default: a sleeping-model teaser that expands dramatically. */
+export function LlmReveal() {
+  const [awake, setAwake] = useState(false);
+
+  if (awake) {
+    return (
+      <div className="lm-reveal">
+        <LlmDiagram />
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className="lm-teaser"
+      onClick={() => setAwake(true)}
+      aria-label="Wake the language model — expands an interactive working model trained on this curriculum"
+    >
+      <svg className="lm-teaser-net" viewBox="0 0 130 64" aria-hidden="true">
+        <line x1="18" y1="18" x2="60" y2="12" />
+        <line x1="18" y1="18" x2="60" y2="32" />
+        <line x1="18" y1="46" x2="60" y2="32" />
+        <line x1="18" y1="46" x2="60" y2="52" />
+        <line x1="60" y1="12" x2="106" y2="32" />
+        <line x1="60" y1="32" x2="106" y2="32" />
+        <line x1="60" y1="52" x2="106" y2="32" />
+        <circle cx="18" cy="18" r="5" />
+        <circle cx="18" cy="46" r="5" />
+        <circle cx="60" cy="12" r="5" />
+        <circle cx="60" cy="32" r="5" />
+        <circle cx="60" cy="52" r="5" />
+        <circle cx="106" cy="32" r="6" />
+      </svg>
+      <span className="lm-teaser-text">
+        <span className="lm-teaser-title">
+          a language model is sleeping here
+        </span>
+        <span className="lm-teaser-sub">
+          a real one — trained on this curriculum, runs in your browser
+        </span>
+      </span>
+      <span className="lm-teaser-cta">wake it ▸</span>
+    </button>
   );
 }
