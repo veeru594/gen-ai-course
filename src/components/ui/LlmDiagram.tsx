@@ -45,6 +45,12 @@ interface Prediction {
   sampled: string;
   sampledP: number;
   source: NgramSource;
+  /** the context words actually used for the lookup */
+  context: string;
+  /** distinct continuations seen after that context */
+  options: number;
+  /** how many times the context occurs in the corpus */
+  occurrences: number;
 }
 
 function predict(tokens: string[]): Prediction {
@@ -54,11 +60,13 @@ function predict(tokens: string[]): Prediction {
 
   let dist: Dist | undefined;
   let source: NgramSource = "corpus";
+  let context = last;
   if (last2) {
     const d = TRI.get(last2);
     if (d && d.size >= 2) {
       dist = d;
       source = "trigram";
+      context = last2;
     }
   }
   if (!dist) {
@@ -66,12 +74,16 @@ function predict(tokens: string[]): Prediction {
     if (d && d.size >= 1) {
       dist = d;
       source = "bigram";
+      context = last;
     }
   }
   if (!dist) {
     dist = FALLBACK;
     source = "corpus";
+    context = last;
   }
+  const occurrences = [...dist.values()].reduce((s, c) => s + c, 0);
+  const options = dist.size;
 
   // repetition penalty: discourage the loops small n-gram models love
   const recent = new Set(tokens.slice(-4));
@@ -98,6 +110,9 @@ function predict(tokens: string[]): Prediction {
     sampled: sampled.token,
     sampledP: sampled.p,
     source,
+    context,
+    options,
+    occurrences,
   };
 }
 
@@ -239,6 +254,7 @@ export function LlmDiagram() {
   const [cycle, setCycle] = useState(0);
   const [tick, setTick] = useState(0);
   const [pred, setPred] = useState<Prediction | null>(null);
+  const [reason, setReason] = useState<Prediction | null>(null);
   const [running, setRunning] = useState(false);
   const runId = useRef(0);
   const toksRef = useRef(tokens);
@@ -273,6 +289,9 @@ export function LlmDiagram() {
     for (let k = 0; k < n; k++) {
       if (!alive()) return;
       setCycle((c) => c + 1);
+      // decide up front so the reasoning panel can narrate the pass live
+      const res = predict(toks);
+      setReason(res);
       if (!reduced) {
         for (let s = 0; s <= 4; s++) {
           setStep(s);
@@ -280,7 +299,6 @@ export function LlmDiagram() {
           if (!alive()) return;
         }
       }
-      const res = predict(toks);
       setPred(res);
       setStep(5);
       await sleep(reduced ? 350 : 1500);
