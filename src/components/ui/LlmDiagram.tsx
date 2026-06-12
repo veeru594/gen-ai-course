@@ -116,8 +116,8 @@ function tokenizeSeed(text: string): string[] {
 
 const COL_X = { tokens: 70, emb: 240, l1: 405, l2: 555, l3: 705, out: 845 };
 const TOKEN_Y = [125, 185, 245];
-const EMB_Y = [95, 155, 215, 275];
-const LAYER_Y = [70, 116, 162, 208, 254, 300];
+const EMB_Y = [80, 120, 160, 200, 240, 280];
+const LAYER_Y = [60, 90, 120, 150, 180, 210, 240, 270, 300];
 const OUT_Y = [100, 160, 220, 280];
 const FEEDBACK_PATH = "M 845 82 C 740 -45, 170 -45, 70 104";
 
@@ -136,6 +136,7 @@ function edgesBetween(
 ) {
   return fromYs.flatMap((y1, i) =>
     toYs.map((y2, j) => {
+      // every edge always carries a weight; weights shimmer while running
       const w = edgeWeight(i, j, seed);
       return (
         <line
@@ -145,11 +146,10 @@ function edgesBetween(
           x2={toX}
           y2={y2}
           className={`lm-edge${active ? " is-active" : ""}`}
-          style={
-            active
-              ? { strokeWidth: 0.5 + w * 2.1, opacity: 0.3 + w * 0.7 }
-              : undefined
-          }
+          style={{
+            strokeWidth: active ? 0.5 + w * 2.2 : 0.3 + w * 1.1,
+            opacity: active ? 0.35 + w * 0.65 : 0.14 + w * 0.42,
+          }}
         />
       );
     }),
@@ -169,10 +169,10 @@ function Particles({
 }) {
   const picks = useMemo(
     () =>
-      Array.from({ length: 12 }, (_, k) => ({
+      Array.from({ length: 16 }, (_, k) => ({
         y1: fromYs[Math.floor(Math.random() * fromYs.length)],
         y2: toYs[Math.floor(Math.random() * toYs.length)],
-        delay: k * 0.03,
+        delay: k * 0.05,
       })),
     // new randoms on every mount; the component is keyed per step
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -191,7 +191,7 @@ function Particles({
             fill="freeze"
           />
           <animateMotion
-            dur="0.4s"
+            dur="0.85s"
             begin={`${p.delay}s`}
             fill="freeze"
             repeatCount="1"
@@ -207,11 +207,11 @@ const PARTICLE_ROUTES: Record<
   number,
   { fromX: number; fromYs: number[]; toX: number; toYs: number[] }
 > = {
-  1: { fromX: COL_X.tokens + 34, fromYs: TOKEN_Y, toX: COL_X.emb - 9, toYs: EMB_Y },
-  2: { fromX: COL_X.emb + 9, fromYs: EMB_Y, toX: COL_X.l1 - 9, toYs: LAYER_Y },
-  3: { fromX: COL_X.l1 + 9, fromYs: LAYER_Y, toX: COL_X.l2 - 9, toYs: LAYER_Y },
-  4: { fromX: COL_X.l2 + 9, fromYs: LAYER_Y, toX: COL_X.l3 - 9, toYs: LAYER_Y },
-  5: { fromX: COL_X.l3 + 9, fromYs: LAYER_Y, toX: COL_X.out - 14, toYs: OUT_Y },
+  1: { fromX: COL_X.tokens + 34, fromYs: TOKEN_Y, toX: COL_X.emb - 7, toYs: EMB_Y },
+  2: { fromX: COL_X.emb + 7, fromYs: EMB_Y, toX: COL_X.l1 - 7, toYs: LAYER_Y },
+  3: { fromX: COL_X.l1 + 7, fromYs: LAYER_Y, toX: COL_X.l2 - 7, toYs: LAYER_Y },
+  4: { fromX: COL_X.l2 + 7, fromYs: LAYER_Y, toX: COL_X.l3 - 7, toYs: LAYER_Y },
+  5: { fromX: COL_X.l3 + 7, fromYs: LAYER_Y, toX: COL_X.out - 14, toYs: OUT_Y },
 };
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
@@ -237,10 +237,20 @@ export function LlmDiagram() {
   const [seedText, setSeedText] = useState("");
   const [step, setStep] = useState(-1);
   const [cycle, setCycle] = useState(0);
+  const [tick, setTick] = useState(0);
   const [pred, setPred] = useState<Prediction | null>(null);
   const [running, setRunning] = useState(false);
   const runId = useRef(0);
   const toksRef = useRef(tokens);
+
+  // weights shimmer while the network is running
+  useEffect(() => {
+    if (!running || reduced) {
+      return;
+    }
+    const id = window.setInterval(() => setTick((t) => t + 1), 300);
+    return () => window.clearInterval(id);
+  }, [running, reduced]);
 
   useEffect(
     () => () => {
@@ -266,14 +276,14 @@ export function LlmDiagram() {
       if (!reduced) {
         for (let s = 0; s <= 4; s++) {
           setStep(s);
-          await sleep(130);
+          await sleep(420);
           if (!alive()) return;
         }
       }
       const res = predict(toks);
       setPred(res);
       setStep(5);
-      await sleep(reduced ? 350 : 1150);
+      await sleep(reduced ? 350 : 1500);
       if (!alive()) return;
       toks = [...toks, res.sampled].slice(-60);
       toksRef.current = toks;
@@ -331,11 +341,11 @@ export function LlmDiagram() {
           APPEND SAMPLED TOKEN — RUN AGAIN
         </text>
 
-        {edgesBetween(COL_X.tokens + 34, TOKEN_Y, COL_X.emb - 9, EMB_Y, step === 1, cycle)}
-        {edgesBetween(COL_X.emb + 9, EMB_Y, COL_X.l1 - 9, LAYER_Y, step === 2, cycle + 11)}
-        {edgesBetween(COL_X.l1 + 9, LAYER_Y, COL_X.l2 - 9, LAYER_Y, step === 3, cycle + 23)}
-        {edgesBetween(COL_X.l2 + 9, LAYER_Y, COL_X.l3 - 9, LAYER_Y, step === 4, cycle + 37)}
-        {edgesBetween(COL_X.l3 + 9, LAYER_Y, COL_X.out - 14, OUT_Y, out, cycle + 51)}
+        {edgesBetween(COL_X.tokens + 34, TOKEN_Y, COL_X.emb - 7, EMB_Y, step === 1, cycle * 9 + tick)}
+        {edgesBetween(COL_X.emb + 7, EMB_Y, COL_X.l1 - 7, LAYER_Y, step === 2, cycle * 9 + tick + 11)}
+        {edgesBetween(COL_X.l1 + 7, LAYER_Y, COL_X.l2 - 7, LAYER_Y, step === 3, cycle * 9 + tick + 23)}
+        {edgesBetween(COL_X.l2 + 7, LAYER_Y, COL_X.l3 - 7, LAYER_Y, step === 4, cycle * 9 + tick + 37)}
+        {edgesBetween(COL_X.l3 + 7, LAYER_Y, COL_X.out - 14, OUT_Y, out, cycle * 9 + tick + 51)}
 
         {!reduced && route && <Particles key={`${cycle}-${step}`} {...route} />}
 
@@ -367,7 +377,7 @@ export function LlmDiagram() {
             key={y}
             cx={COL_X.emb}
             cy={y}
-            r={9}
+            r={7}
             className={`lm-node${step === 1 ? " is-active" : ""}`}
             style={step === 1 ? { animationDelay: `${i * 50}ms` } : undefined}
           />
@@ -392,9 +402,9 @@ export function LlmDiagram() {
                 key={y}
                 cx={x}
                 cy={y}
-                r={9}
+                r={7}
                 className={`lm-node${on ? " is-active" : ""}`}
-                style={on ? { animationDelay: `${i * 45}ms` } : undefined}
+                style={on ? { animationDelay: `${i * 40}ms` } : undefined}
               />
             ))}
           </g>
