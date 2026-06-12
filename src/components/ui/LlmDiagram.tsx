@@ -410,29 +410,25 @@ export function LlmDiagram() {
           </g>
         ))}
 
-        {/* real output distribution */}
+        {/* real output distribution — stays visible after the pass */}
         {OUT_Y.map((y, i) => {
           const c = candidates[i];
-          const isSampled = out && c?.token === pred?.sampled;
+          const isSampled = pred !== null && c?.token === pred.sampled;
           return (
             <g key={y}>
               <text x={COL_X.out} y={y - 10} className={`lm-out-label${isSampled ? " is-top" : ""}`}>
-                {c ? chipLabel(c.token) : "—"}
+                {c ? chipLabel(c.token) : ""}
               </text>
               <rect
                 x={COL_X.out}
                 y={y - 4}
-                width={out && c ? Math.max(4, (c.p / maxP) * 105) : 3}
+                width={c ? Math.max(4, (c.p / maxP) * 105) : 0}
                 height={9}
                 rx={2}
                 className={`lm-out-bar${isSampled ? " is-top" : ""}`}
               />
               <text x={COL_X.out} y={y + 20} className="lm-out-pct">
-                {out && c
-                  ? c.p >= 0.01
-                    ? `${Math.round(c.p * 100)}%`
-                    : "<1%"
-                  : "—"}
+                {c ? (c.p >= 0.01 ? `${Math.round(c.p * 100)}%` : "<1%") : ""}
               </text>
             </g>
           );
@@ -520,8 +516,8 @@ export function LlmDiagram() {
       </p>
 
       <figcaption className="lm-caption">
-        {out && pred ? (
-          <span className="lm-sampled is-on">
+        {pred ? (
+          <span className={`lm-sampled${out ? " is-on" : ""}`}>
             sampled “{pred.sampled}” — p={Math.round(pred.sampledP * 100)}%,{" "}
             {pred.source === "corpus"
               ? "word not in the curriculum, backing off to corpus frequencies"
