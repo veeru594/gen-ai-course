@@ -1,0 +1,100 @@
+.lm-diagram {
+  margin: 0;
+}
+
+.lm-diagram svg {
+  width: 100%;
+  height: auto;
+}
+
+.lm-edge {
+  stroke: var(--line);
+  stroke-width: 0.7;
+  transition: stroke var(--t-med) var(--ease);
+}
+
+.lm-edge.is-active {
+  stroke: var(--module-hue);
+  stroke-width: 1.1;
+}
+
+.lm-token {
+  fill: var(--paper-raise);
+  stroke: var(--line-strong);
+  transition: stroke var(--t-med) var(--ease), fill var(--t-med) var(--ease);
+}
+
+.lm-token.is-active {
+  stroke: var(--module-hue);
+  fill: var(--module-tint);
+}
+
+.lm-token-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  fill: var(--ink);
+}
+
+.lm-node {
+  fill: var(--paper-raise);
+  stroke: var(--ink-faint);
+  stroke-width: 1.2;
+  transition: fill var(--t-med) var(--ease), stroke var(--t-med) var(--ease);
+}
+
+.lm-node.is-active {
+  fill: var(--module-hue);
+  stroke: var(--module-hue);
+}
+
+.lm-layer-box {
+  fill: none;
+  stroke: var(--line);
+  stroke-dasharray: 4 4;
+}
+
+.lm-out-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  fill: var(--ink-soft);
+  transition: fill var(--t-med) var(--ease);
+}
+
+.lm-out-label.is-top {
+  fill: var(--ink);
+  font-weight: 600;
+}
+
+.lm-out-bar {
+  fill: var(--line-strong);
+  transition: width 500ms var(--ease), fill var(--t-med) var(--ease);
+}
+
+.lm-out-bar.is-top {
+  fill: var(--module-hue);
+}
+
+.lm-out-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-faint);
+}
+
+.lm-col-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  fill: var(--ink-faint);
+}
+
+.lm-caption {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.lm-sampled.is-on {
+  color: var(--module-hue);
+  font-weight: 600;
+}

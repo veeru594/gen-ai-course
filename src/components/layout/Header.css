@@ -70,6 +70,67 @@
   box-shadow: inset 0 -2px 0 var(--mark);
 }
 
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-btn {
+  background: none;
+  border: none;
+}
+
+.nav-dropdown-btn[aria-expanded="true"] {
+  color: var(--ink);
+  background: var(--paper-sunk);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  min-width: 17rem;
+  background: var(--paper-raise);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  box-shadow: 0 10px 30px rgba(26, 26, 28, 0.14);
+  padding: 0.35rem;
+  display: grid;
+  z-index: 30;
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-s);
+  text-decoration: none;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.nav-dropdown-item:hover {
+  background: var(--paper-sunk);
+}
+
+.nav-dropdown-item.active {
+  background: var(--module-tint);
+}
+
+.nav-dropdown-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--module-hue);
+  flex-shrink: 0;
+}
+
+.nav-dropdown-num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+
 @media (max-width: 760px) {
   .site-header-divider,
   .brand {
