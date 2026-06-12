@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./LlmDiagram.css";
 
 /* Animated forward pass: input tokens → embeddings → transformer layers
-   → output probability distribution. One pulse per cycle, one token out. */
+   → output distribution → sampled token fed back to the input.
+   Edge strengths reshuffle every cycle — attention is different each pass. */
 
 const TOKENS = ["auto", "ma", "tion"];
 
@@ -13,49 +14,40 @@ const CANDIDATES = [
   { token: "sings", p: 0.07 },
 ];
 
-// column x positions and node y layouts
 const COL_X = { tokens: 70, emb: 240, l1: 405, l2: 555, l3: 705, out: 845 };
 const TOKEN_Y = [125, 185, 245];
 const EMB_Y = [95, 155, 215, 275];
 const LAYER_Y = [70, 116, 162, 208, 254, 300];
 const OUT_Y = [110, 165, 220, 275];
 
-// pulse steps: 0 tokens, 1 emb, 2 l1, 3 l2, 4 l3, 5 output
-const STEP_HOLD = [650, 650, 650, 650, 650, 2200];
+// pulse steps: 0 tokens, 1 emb, 2 l1, 3 l2, 4 l3, 5 output + feedback
+const STEP_HOLD = [600, 600, 600, 600, 600, 2600];
 
-function usePulse(reduced: boolean): number {
+function usePulse(reduced: boolean): { step: number; cycle: number } {
   const [step, setStep] = useState(0);
+  const [cycle, setCycle] = useState(0);
   useEffect(() => {
     if (reduced) {
       return;
     }
-    const t = window.setTimeout(
-      () => setStep((s) => (s + 1) % STEP_HOLD.length),
-      STEP_HOLD[step],
-    );
+    const t = window.setTimeout(() => {
+      setStep((s) => {
+        if (s === STEP_HOLD.length - 1) {
+          setCycle((c) => c + 1);
+          return 0;
+        }
+        return s + 1;
+      });
+    }, STEP_HOLD[step]);
     return () => window.clearTimeout(t);
   }, [step, reduced]);
-  return reduced ? 5 : step;
+  return reduced ? { step: 5, cycle: 0 } : { step, cycle };
 }
 
-interface EdgeProps {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  active: boolean;
-}
-
-function Edge({ x1, y1, x2, y2, active }: EdgeProps) {
-  return (
-    <line
-      x1={x1}
-      y1={y1}
-      x2={x2}
-      y2={y2}
-      className={`lm-edge${active ? " is-active" : ""}`}
-    />
-  );
+/** cheap deterministic pseudo-random in [0,1) from edge indices + cycle */
+function edgeWeight(i: number, j: number, seed: number): number {
+  const n = Math.sin(i * 12.9898 + j * 78.233 + seed * 37.719) * 43758.5453;
+  return n - Math.floor(n);
 }
 
 function edgesBetween(
@@ -64,20 +56,96 @@ function edgesBetween(
   toX: number,
   toYs: number[],
   active: boolean,
+  seed: number,
 ) {
   return fromYs.flatMap((y1, i) =>
-    toYs.map((y2, j) => (
-      <Edge
-        key={`${i}-${j}`}
-        x1={fromX}
-        y1={y1}
-        x2={toX}
-        y2={y2}
-        active={active}
-      />
-    )),
+    toYs.map((y2, j) => {
+      const w = edgeWeight(i, j, seed);
+      return (
+        <line
+          key={`${i}-${j}`}
+          x1={fromX}
+          y1={y1}
+          x2={toX}
+          y2={y2}
+          className={`lm-edge${active ? " is-active" : ""}`}
+          style={
+            active
+              ? { strokeWidth: 0.5 + w * 2.1, opacity: 0.3 + w * 0.7 }
+              : undefined
+          }
+        />
+      );
+    }),
   );
 }
+
+interface ParticleSpec {
+  y1: number;
+  y2: number;
+  delay: number;
+}
+
+/** sparks that travel the wires of the currently-active transition */
+function Particles({
+  fromX,
+  fromYs,
+  toX,
+  toYs,
+}: {
+  fromX: number;
+  fromYs: number[];
+  toX: number;
+  toYs: number[];
+}) {
+  const picks = useMemo<ParticleSpec[]>(
+    () =>
+      Array.from({ length: 12 }, (_, k) => ({
+        y1: fromYs[Math.floor(Math.random() * fromYs.length)],
+        y2: toYs[Math.floor(Math.random() * toYs.length)],
+        delay: k * 0.035,
+      })),
+    // new randoms on every mount; the component is keyed by step
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+  return (
+    <>
+      {picks.map((p, k) => (
+        <circle key={k} r={2.6} opacity={0} className="lm-particle">
+          <animate
+            attributeName="opacity"
+            from="0"
+            to="0.95"
+            dur="0.01s"
+            begin={`${p.delay}s`}
+            fill="freeze"
+          />
+          <animateMotion
+            dur="0.5s"
+            begin={`${p.delay}s`}
+            fill="freeze"
+            repeatCount="1"
+            path={`M ${fromX} ${p.y1} L ${toX} ${p.y2}`}
+          />
+        </circle>
+      ))}
+    </>
+  );
+}
+
+const PARTICLE_ROUTES: Record<
+  number,
+  { fromX: number; fromYs: number[]; toX: number; toYs: number[] }
+> = {
+  1: { fromX: COL_X.tokens + 34, fromYs: TOKEN_Y, toX: COL_X.emb - 9, toYs: EMB_Y },
+  2: { fromX: COL_X.emb + 9, fromYs: EMB_Y, toX: COL_X.l1 - 9, toYs: LAYER_Y },
+  3: { fromX: COL_X.l1 + 9, fromYs: LAYER_Y, toX: COL_X.l2 - 9, toYs: LAYER_Y },
+  4: { fromX: COL_X.l2 + 9, fromYs: LAYER_Y, toX: COL_X.l3 - 9, toYs: LAYER_Y },
+  5: { fromX: COL_X.l3 + 9, fromYs: LAYER_Y, toX: COL_X.out - 14, toYs: OUT_Y },
+};
+
+const FEEDBACK_PATH = "M 845 92 C 740 -45, 170 -45, 70 104";
 
 export function LlmDiagram() {
   const [reduced, setReduced] = useState(
@@ -90,22 +158,35 @@ export function LlmDiagram() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  const step = usePulse(reduced);
+  const { step, cycle } = usePulse(reduced);
   const out = step === 5;
+  const route = PARTICLE_ROUTES[step];
 
   return (
     <figure className="lm-diagram" data-module="foundations">
       <svg
-        viewBox="0 0 960 370"
+        viewBox="0 -58 960 432"
         role="img"
-        aria-label="Diagram of a language model forward pass: input tokens flow through embeddings and stacked transformer layers into an output probability distribution over candidate next tokens"
+        aria-label="Diagram of a language model forward pass: input tokens flow through embeddings and stacked transformer layers into an output probability distribution; the sampled token is appended back onto the input and the loop repeats"
       >
-        {/* edges, layer by layer — lit when the pulse crosses them */}
-        {edgesBetween(COL_X.tokens + 34, TOKEN_Y, COL_X.emb - 9, EMB_Y, step === 1)}
-        {edgesBetween(COL_X.emb + 9, EMB_Y, COL_X.l1 - 9, LAYER_Y, step === 2)}
-        {edgesBetween(COL_X.l1 + 9, LAYER_Y, COL_X.l2 - 9, LAYER_Y, step === 3)}
-        {edgesBetween(COL_X.l2 + 9, LAYER_Y, COL_X.l3 - 9, LAYER_Y, step === 4)}
-        {edgesBetween(COL_X.l3 + 9, LAYER_Y, COL_X.out - 14, OUT_Y, out)}
+        {/* feedback arc — the autoregressive loop */}
+        <path
+          d={FEEDBACK_PATH}
+          className={`lm-feedback-arc${out ? " is-on" : ""}`}
+        />
+        <text x={457} y={-30} textAnchor="middle" className={`lm-feedback-label${out ? " is-on" : ""}`}>
+          APPEND SAMPLED TOKEN — RUN AGAIN
+        </text>
+
+        {/* edges, weights reshuffled per cycle */}
+        {edgesBetween(COL_X.tokens + 34, TOKEN_Y, COL_X.emb - 9, EMB_Y, step === 1, cycle)}
+        {edgesBetween(COL_X.emb + 9, EMB_Y, COL_X.l1 - 9, LAYER_Y, step === 2, cycle + 11)}
+        {edgesBetween(COL_X.l1 + 9, LAYER_Y, COL_X.l2 - 9, LAYER_Y, step === 3, cycle + 23)}
+        {edgesBetween(COL_X.l2 + 9, LAYER_Y, COL_X.l3 - 9, LAYER_Y, step === 4, cycle + 37)}
+        {edgesBetween(COL_X.l3 + 9, LAYER_Y, COL_X.out - 14, OUT_Y, out, cycle + 51)}
+
+        {/* travelling sparks on the active transition */}
+        {!reduced && route && <Particles key={`${cycle}-${step}`} {...route} />}
 
         {/* input tokens */}
         {TOKENS.map((t, i) => (
@@ -117,6 +198,7 @@ export function LlmDiagram() {
               height={28}
               rx={5}
               className={`lm-token${step === 0 ? " is-active" : ""}`}
+              style={step === 0 ? { transitionDelay: `${i * 60}ms` } : undefined}
             />
             <text x={COL_X.tokens} y={TOKEN_Y[i] + 4} textAnchor="middle" className="lm-token-label">
               {t}
@@ -125,13 +207,14 @@ export function LlmDiagram() {
         ))}
 
         {/* embeddings */}
-        {EMB_Y.map((y) => (
+        {EMB_Y.map((y, i) => (
           <circle
             key={y}
             cx={COL_X.emb}
             cy={y}
             r={9}
             className={`lm-node${step === 1 ? " is-active" : ""}`}
+            style={step === 1 ? { animationDelay: `${i * 50}ms` } : undefined}
           />
         ))}
 
@@ -150,13 +233,14 @@ export function LlmDiagram() {
               rx={10}
               className="lm-layer-box"
             />
-            {LAYER_Y.map((y) => (
+            {LAYER_Y.map((y, i) => (
               <circle
                 key={y}
                 cx={x}
                 cy={y}
                 r={9}
                 className={`lm-node${on ? " is-active" : ""}`}
+                style={on ? { animationDelay: `${i * 45}ms` } : undefined}
               />
             ))}
           </g>
@@ -186,6 +270,29 @@ export function LlmDiagram() {
           </g>
         ))}
 
+        {/* the sampled token riding the feedback arc home */}
+        {!reduced && out && (
+          <g key={cycle} className="lm-feedback-chip" opacity={0}>
+            <animate
+              attributeName="opacity"
+              from="0"
+              to="1"
+              dur="0.01s"
+              begin="0.7s"
+              fill="freeze"
+            />
+            <animateMotion
+              dur="1.3s"
+              begin="0.7s"
+              fill="freeze"
+              repeatCount="1"
+              path={FEEDBACK_PATH}
+            />
+            <rect x={-32} y={-13} width={64} height={26} rx={5} />
+            <text y={5} textAnchor="middle">works</text>
+          </g>
+        )}
+
         {/* column labels */}
         <text x={COL_X.tokens} y={350} textAnchor="middle" className="lm-col-label">
           INPUT TOKENS
@@ -203,7 +310,9 @@ export function LlmDiagram() {
 
       <figcaption className="lm-caption">
         <span className={`lm-sampled${out ? " is-on" : ""}`} aria-live="polite">
-          {out ? 'sampled → "works"' : "forward pass running…"}
+          {out
+            ? 'sampled → "works" — appended to the input, and the loop runs again'
+            : `forward pass running… attention pattern #${cycle + 1}`}
         </span>
       </figcaption>
     </figure>
