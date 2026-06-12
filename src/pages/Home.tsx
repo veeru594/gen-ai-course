@@ -27,9 +27,10 @@ const TOOLS = [
 export function Home() {
   return (
     <div className="container home">
-      <div className="home-hero">
-        <section className="home-thesis">
-          <p className="meta home-kicker">NGO Training Program</p>
+      <AsciiHero />
+
+      <section className="home-thesis">
+        <p className="meta home-kicker">NGO Training Program</p>
           <h1>
             Understanding first.
             <br />
@@ -61,10 +62,7 @@ export function Home() {
             </Highlight>
             .
           </p>
-        </section>
-
-        <AsciiHero />
-      </div>
+      </section>
 
       <section className="home-tools" aria-label="Tools covered">
         <div className="home-tools-track" aria-hidden="true">
