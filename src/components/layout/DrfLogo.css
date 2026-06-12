@@ -1,41 +1,7 @@
 .drf-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.drf-logo-mark {
-  width: 2.4rem;
-  height: 2.4rem;
-  flex-shrink: 0;
-}
-
-.drf-logo-text {
-  display: grid;
-  gap: 0.15rem;
-  line-height: 1;
-}
-
-.drf-logo-name {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.92rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #6d6e71;
-}
-
-.drf-logo-rule {
+  height: 2.5rem;
+  width: auto;
   display: block;
-  height: 1.5px;
-  background: #e0474c;
-}
-
-.drf-logo-foundation {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.78rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: #6d6e71;
+  /* melts any white background into the paper */
+  mix-blend-mode: multiply;
 }
