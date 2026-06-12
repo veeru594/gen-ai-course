@@ -36,6 +36,28 @@ const MOUTHS = ["▃▃▃▃▃", "▂▃█▃▂", "▂███▂", "▃▂
 
 type Phase = "typing" | "streaming" | "holding";
 
+/* idle micro-actions, Claude-Code-in-the-terminal style */
+type BotAction =
+  | "none"
+  | "look-left"
+  | "look-right"
+  | "wiggle"
+  | "hop"
+  | "tilt"
+  | "walk";
+
+const IDLE_ACTIONS: BotAction[] = [
+  "look-left",
+  "look-right",
+  "wiggle",
+  "hop",
+  "tilt",
+  "walk",
+];
+
+const SPINNER = "|/-\\";
+const VERBS = ["tokenizing", "attending", "sampling"];
+
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -53,16 +75,26 @@ function buildBot(opts: {
   speaking: boolean;
   blink: boolean;
   frame: number;
+  action: BotAction;
 }): string {
-  const { speaking, blink, frame } = opts;
-  const eye = blink ? "▁" : "█";
+  const { speaking, blink, frame, action } = opts;
+  const eye = blink
+    ? "▁"
+    : action === "look-left" || action === "walk"
+      ? "▌"
+      : action === "look-right"
+        ? "▐"
+        : "█";
   const mouth = speaking ? MOUTHS[frame % MOUTHS.length] : "▃▃▃▃▃";
-  const tip = speaking ? (frame % 2 === 0 ? "●" : "○") : "○";
+  const wiggling = action === "wiggle";
+  const tip =
+    speaking || wiggling ? (frame % 2 === 0 ? "●" : "○") : "○";
+  const stem = wiggling ? ["╱", "│", "╲", "│"][frame % 4] : "│";
   const w = speaking ? "≈" : " ";
   // every row is exactly 19 columns wide
   return [
     `         ${tip}         `,
-    "         │         ",
+    `         ${stem}         `,
     "  ╔══════╧══════╗  ",
     `══╣   ${eye}     ${eye}   ╠══`,
     "  ║             ║  ",
@@ -78,7 +110,26 @@ export function AsciiHero() {
   const [qChars, setQChars] = useState(0);
   const [aTokens, setATokens] = useState(0);
   const [frame, setFrame] = useState(0);
+  const [action, setAction] = useState<BotAction>("none");
   const phase = useRef<Phase>("typing");
+  const speakingRef = useRef(false);
+
+  // every few seconds of idle time, do a small random action
+  useEffect(() => {
+    if (reduced) {
+      return;
+    }
+    const id = window.setInterval(() => {
+      if (speakingRef.current) {
+        return;
+      }
+      const pick =
+        IDLE_ACTIONS[Math.floor(Math.random() * IDLE_ACTIONS.length)];
+      setAction(pick);
+      window.setTimeout(() => setAction("none"), 1500);
+    }, 3400);
+    return () => window.clearInterval(id);
+  }, [reduced]);
 
   // conversation loop
   useEffect(() => {
@@ -126,7 +177,12 @@ export function AsciiHero() {
   const questionDone = reduced || qChars >= current.q.length;
   const answerDone = reduced || answerTokens.length >= current.a.length;
   const speaking = !reduced && questionDone && !answerDone && aTokens > 0;
-  const blink = !reduced && !speaking && frame % 20 === 0;
+  speakingRef.current = speaking;
+  const blink = !reduced && !speaking && action === "none" && frame % 20 === 0;
+  const moveClass =
+    action === "hop" || action === "tilt" || action === "walk"
+      ? ` bot-${action}`
+      : "";
 
   return (
     <section
@@ -154,8 +210,10 @@ export function AsciiHero() {
         </div>
 
         <div className="ascii-hero-top" aria-hidden="true">
-          <pre className="ascii-hero-bot">
-            {buildBot({ speaking, blink, frame })}
+          <pre
+            className={`ascii-hero-bot${moveClass}${speaking ? " is-speaking" : ""}`}
+          >
+            {buildBot({ speaking, blink, frame, action })}
           </pre>
           <p className="ascii-hero-caption">[ next-token predictor ]</p>
         </div>
@@ -163,7 +221,11 @@ export function AsciiHero() {
 
       <p className="ascii-hero-status" aria-hidden="true">
         <span>T=0.70</span>
-        <span>stream: {speaking ? "▮▮▮" : "idle"}</span>
+        <span>
+          {speaking
+            ? `${SPINNER[frame % SPINNER.length]} ${VERBS[Math.floor(frame / 5) % VERBS.length]}…`
+            : "stream: idle"}
+        </span>
         <span>ctx: 200k</span>
       </p>
     </section>
