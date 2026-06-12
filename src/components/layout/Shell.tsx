@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { Header } from "./Header";
-import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import "./Shell.css";
 
@@ -43,7 +42,6 @@ export function Shell() {
       <main id="main" className="shell-main">
         <Outlet />
       </main>
-      <Footer />
       <CommandPalette />
       <ScrollRestoration />
     </div>
