@@ -199,6 +199,33 @@ await sleep(500);
   );
 }
 
+// ---- Embeddings explorer
+{
+  const section = document.getElementById("demo-embeddings");
+  const nodes = [...section.querySelectorAll(".emb-node")];
+  check("embeddings renders term map", nodes.length > 20);
+  nodes[0].dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await sleep(100);
+  check(
+    "embeddings selecting a term lists neighbours",
+    section.querySelectorAll(".emb-neighbours li").length > 0 &&
+      section.querySelectorAll(".emb-edge").length > 0,
+  );
+}
+
+// ---- RAG retrieval
+{
+  const section = document.getElementById("demo-rag");
+  check("rag renders chunk candidates", section.querySelectorAll(".rag-chunk").length > 5);
+  buttonByText("How does retrieval find relevant text?", section).click();
+  await sleep(100);
+  check(
+    "rag retrieves top chunks and builds a prompt",
+    section.querySelector(".rag-chunk.is-hit") !== null &&
+      section.querySelector(".rag-prompt").textContent.includes("Context:"),
+  );
+}
+
 // ---- Resources filter/search
 {
   window.history.pushState({}, "", "/resources");

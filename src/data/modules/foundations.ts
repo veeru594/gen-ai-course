@@ -337,10 +337,22 @@ export const foundations: Module = {
       afterSession: 1,
     },
     {
+      id: "embeddings",
+      title: "Meaning becomes geometry",
+      lede: "Every term below is placed by how it's used across this curriculum — related ideas end up close together. Click one to see its nearest neighbours by cosine similarity. This is the intuition behind embeddings, vector space, and the retrieval that follows.",
+      afterSession: 1,
+    },
+    {
       id: "temperature",
       title: "Temperature is not a creativity dial",
       lede: "Eight candidate tokens, fixed logits, one slider. Watch the probability distribution reshape live, then sample from it. Low T always says Paris. High T gets weird — and that moment is the lesson.",
       afterSession: 2,
+    },
+    {
+      id: "rag",
+      title: "Watch retrieval ground an answer",
+      lede: "Ask a question. Watch it embed, retrieve the most relevant curriculum passages by similarity, and assemble the augmented prompt an LLM would answer from. Retrieval is real — it reuses the embeddings above to match meaning, not keywords.",
+      afterSession: 3,
     },
   ],
   concepts: [

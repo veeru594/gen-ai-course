@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { modules } from "../../data/modules";
-import { DrfLogo } from "./DrfLogo";
 import "./Header.css";
 
 const SHORT_NAMES: Record<string, string> = {
@@ -75,14 +74,15 @@ export function Header() {
     <header className="site-header">
       <div className="container site-header-inner">
         <div className="site-header-brand">
-          <DrfLogo />
-          <span className="site-header-divider" aria-hidden="true" />
           <Link to="/" className="brand">
             <span className="brand-name">Automation with Generative AI</span>
           </Link>
         </div>
         <nav className="site-nav" aria-label="Primary">
           <ModulesDropdown />
+          <NavLink to="/schedule" className="nav-link">
+            Schedule
+          </NavLink>
           <NavLink to="/playground" className="nav-link">
             Playground
           </NavLink>

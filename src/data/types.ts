@@ -8,6 +8,8 @@ export type ModuleId =
 export type DemoId =
   | "tokenizer"
   | "temperature"
+  | "embeddings"
+  | "rag"
   | "workflow"
   | "model-matrix"
   | "react-loop"

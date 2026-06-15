@@ -1,0 +1,25 @@
+{
+  "name": "remotion-llm-journey",
+  "version": "1.0.0",
+  "description": "What happens between pressing Enter and seeing the first word — a Remotion explainer for the Automation with Generative AI curriculum.",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render LlmJourney out/llm-journey.mp4",
+    "still": "remotion still LlmJourney out/still.png",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/media-utils": "4.0.290",
+    "framer-motion": "^11.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.290"
+  },
+  "devDependencies": {
+    "@remotion/cli": "4.0.290",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.6.3"
+  }
+}

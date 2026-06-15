@@ -90,7 +90,7 @@ export function Resources() {
       <ul className="resources-list">
         {filtered.map((r) => (
           <li
-            key={r.url}
+            key={`${r.module}-${r.url}`}
             className="resources-row"
             data-module={r.module !== "general" ? r.module : undefined}
           >

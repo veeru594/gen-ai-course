@@ -15,12 +15,6 @@ const generalResources: Resource[] = [
     module: "general",
   },
   {
-    label: "Google AI Studio",
-    url: "https://aistudio.google.com/",
-    purpose: "prototype Gemini prompts in the browser before writing code",
-    module: "general",
-  },
-  {
     label: "arXiv cs.CL",
     url: "https://arxiv.org/list/cs.CL/recent",
     purpose: "where the field's primary papers land first",

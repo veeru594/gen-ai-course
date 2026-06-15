@@ -16,6 +16,7 @@ interface PaletteItem {
 function buildItems(): PaletteItem[] {
   const pages: PaletteItem[] = [
     { id: "page-home", title: "Home", hint: "/", keywords: "home start modules path", to: "/" },
+    { id: "page-schedule", title: "Schedule", hint: "/schedule", keywords: "session plan days calendar timetable hours", to: "/schedule" },
     { id: "page-playground", title: "Playground", hint: "/playground", keywords: "demos all interactive", to: "/playground" },
     { id: "page-capstone", title: "Capstone", hint: "/capstone", keywords: "review submission github rubric", to: "/capstone" },
     { id: "page-resources", title: "Resources", hint: "/resources", keywords: "links library docs", to: "/resources" },

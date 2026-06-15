@@ -1,0 +1,30 @@
+.status-page {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-block: 4rem;
+  gap: 0.5rem;
+}
+
+.status-code {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.status-body {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.status-link {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration-color: var(--mark);
+  text-decoration-thickness: 2px;
+}

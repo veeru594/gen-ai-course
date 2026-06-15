@@ -31,7 +31,7 @@ export function Home() {
 
       <div className="home-thesis-row">
         <section className="home-thesis">
-          <p className="meta home-kicker">NGO Training Program</p>
+          <p className="meta home-kicker">Training Program</p>
           <h1>
             Understanding first.
             <br />
@@ -160,8 +160,8 @@ export function Home() {
           <div className="home-method-step">
             <span className="meta">02 — LAB, SAME DAY</span>
             <p>
-              The same concept is built by hand the same afternoon. 200 lab
-              hours sit beside the 220 theory hours.
+              The same concept is built by hand the same afternoon. 240 lab
+              hours sit beside the 180 theory hours.
             </p>
           </div>
           <div className="home-method-step">

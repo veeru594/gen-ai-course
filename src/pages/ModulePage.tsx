@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getModule } from "../data/modules";
+import { NotFound } from "./NotFound";
 import type { Session } from "../data/types";
 import { ModuleHero } from "../components/ui/ModuleHero";
 import { ConceptCard } from "../components/ui/ConceptCard";
@@ -8,6 +9,7 @@ import { ExerciseCard } from "../components/ui/ExerciseCard";
 import { ResourceRail } from "../components/ui/ResourceRail";
 import { CodeBlock } from "../components/ui/CodeBlock";
 import { DemoHost } from "../components/demos/DemoHost";
+import { JourneyVideo } from "../components/ui/JourneyVideo";
 import "./ModulePage.css";
 
 function SessionSection({ session }: { session: Session }) {
@@ -52,7 +54,7 @@ export function ModulePage() {
   }, [module]);
 
   if (!module) {
-    return <Navigate to="/" replace />;
+    return <NotFound />;
   }
 
   function toggleExercise(exId: string) {
@@ -72,6 +74,10 @@ export function ModulePage() {
       <div className="container module-layout">
         <article className="module-content">
           <ModuleHero module={module} />
+
+          {/* The cinematic opener lives only on Module 01 — the awe primer
+              for the whole curriculum, before any lesson begins. */}
+          {module.id === "foundations" && <JourneyVideo />}
 
           {module.sessions.map((session, i) => (
             <Fragment key={session.id}>
