@@ -13,6 +13,9 @@ export type DemoId =
   | "workflow"
   | "model-matrix"
   | "react-loop"
+  | "lcel"
+  | "context-window"
+  | "backoff"
   | "contract";
 
 export interface TopicRow {

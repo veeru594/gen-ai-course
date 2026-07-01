@@ -18,9 +18,9 @@ export function getModule(id: string | undefined): Module | undefined {
 }
 
 export const programHours = {
-  theory: 180,
+  theory: 165,
   employability: 90,
-  lab: 240,
+  lab: 255,
   capstone: 30,
   total: 540,
 } as const;

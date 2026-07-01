@@ -1,0 +1,196 @@
+.exv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  animation: exv-fade var(--t-fast, 0.18s) var(--ease, ease);
+}
+
+@keyframes exv-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.exv-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+  border-bottom: 2px solid var(--module-hue, var(--ink));
+  background: var(--paper);
+}
+
+.exv-bar-left,
+.exv-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.exv-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.exv-crumb-concept {
+  color: var(--module-hue, var(--ink));
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.exv-crumb-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exv-source {
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.exv-close,
+.exv-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  border-radius: var(--radius-s, 6px);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t-fast, 0.18s) var(--ease, ease);
+}
+
+.exv-close:hover,
+.exv-toggle:hover {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.exv-open {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-s, 6px);
+  background: var(--module-hue, var(--ink));
+  color: var(--paper);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.exv-stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.exv-stage.has-guide {
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.exv-frame-wrap {
+  min-width: 0;
+  min-height: 0;
+  background: #fff;
+}
+
+.exv-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.exv-fallback {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.exv-fallback-lede {
+  max-width: 48ch;
+  opacity: 0.8;
+}
+
+.exv-fallback-btn {
+  font-family: var(--font-mono);
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--radius-s, 6px);
+  background: var(--module-hue, var(--ink));
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.exv-guide {
+  border-left: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  padding: 1.1rem 1.2rem;
+  overflow-y: auto;
+  background: color-mix(in srgb, var(--module-hue, var(--ink)) 4%, var(--paper));
+}
+
+.exv-guide-blurb {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 1.2rem;
+}
+
+.exv-guide-block {
+  margin-bottom: 1.2rem;
+}
+
+.exv-guide-label {
+  color: var(--module-hue, var(--ink));
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+}
+
+.exv-guide-block ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.exv-guide-block li {
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 860px) {
+  .exv-stage.has-guide {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .exv-guide {
+    border-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    max-height: 45vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exv-overlay {
+    animation: none;
+  }
+}

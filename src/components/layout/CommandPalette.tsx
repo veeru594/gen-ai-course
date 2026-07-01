@@ -34,7 +34,7 @@ function buildItems(): PaletteItem[] {
       title: `Demo — ${d.title}`,
       hint: "playground",
       keywords: `demo interactive ${d.id} ${m.title}`,
-      to: `/playground#demo-${d.id}`,
+      to: `/playground#entry-${d.id}`,
     })),
   );
   const resources: PaletteItem[] = allResources.map((r) => ({

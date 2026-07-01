@@ -7,6 +7,9 @@ import { RagDemo } from "./RagDemo";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { ModelMatrixDemo } from "./ModelMatrixDemo";
 import { ReactLoopDemo } from "./ReactLoopDemo";
+import { LcelChainDemo } from "./LcelChainDemo";
+import { ContextWindowDemo } from "./ContextWindowDemo";
+import { BackoffDemo } from "./BackoffDemo";
 import { ContractDemo } from "./ContractDemo";
 
 /** Demo components register here; ModulePage and Playground render from it. */
@@ -18,5 +21,8 @@ export const demoRegistry: Record<DemoId, ComponentType> = {
   workflow: WorkflowDemo,
   "model-matrix": ModelMatrixDemo,
   "react-loop": ReactLoopDemo,
+  lcel: LcelChainDemo,
+  "context-window": ContextWindowDemo,
+  backoff: BackoffDemo,
   contract: ContractDemo,
 };

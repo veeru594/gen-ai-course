@@ -8,8 +8,72 @@
   color: var(--ink-soft);
 }
 
+.playground-nav {
+  position: sticky;
+  top: 3.1rem;
+  z-index: 15;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.7rem 0;
+  margin-bottom: 0.5rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.playground-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.playground-filter {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--module-hue, var(--ink-soft));
+  color: var(--module-hue, var(--ink-soft));
+  background: transparent;
+  transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+
+.playground-filter[aria-pressed="true"] {
+  background: var(--module-hue, var(--ink));
+  color: var(--paper);
+}
+
+.playground-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.playground-jump {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--module-hue, var(--line-strong));
+  color: var(--ink);
+  background: var(--paper-raise);
+  text-align: left;
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+.playground-jump:hover {
+  border-color: var(--module-hue, var(--line-strong));
+  background: var(--paper);
+}
+
+.playground-count {
+  margin-bottom: 0.75rem;
+}
+
 .playground-entry {
   margin-top: 2.5rem;
+  scroll-margin-top: 7rem;
 }
 
 .playground-entry-meta a {
@@ -19,4 +83,15 @@
 
 .playground-entry .demo-host {
   margin-top: 0.5rem;
+}
+
+.playground-empty {
+  color: var(--ink-soft);
+  padding-block: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .playground-nav {
+    position: static;
+  }
 }

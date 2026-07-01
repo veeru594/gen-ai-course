@@ -4,7 +4,7 @@ export const automation: Module = {
   id: "automation",
   number: "02",
   title: "Automation Platforms & Workflow Design",
-  hours: 45,
+  hours: 35,
   tagline:
     "Automation is a discipline with its own principles and failure modes — entirely independent of AI. Learn it on its own terms first.",
   intro: [

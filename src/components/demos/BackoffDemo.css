@@ -1,0 +1,13 @@
+.backoff-log {
+  min-height: 6rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.backoff-row {
+  overflow-wrap: anywhere;
+}
+
+.backoff-attempt {
+  color: var(--code-ink);
+}

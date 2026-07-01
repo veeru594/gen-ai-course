@@ -1,0 +1,106 @@
+.lcel-pipe-code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-edge);
+  border-radius: var(--radius-s);
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--code-ink);
+  overflow-x: auto;
+  margin-block: 0 1rem;
+}
+
+.lcel-control-label {
+  margin-right: 0.1rem;
+}
+
+.lcel-pipeline {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.lcel-stage {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  padding: 0.7rem 0.85rem;
+  background: var(--paper-raise);
+  opacity: 0.55;
+  transition: opacity var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.lcel-stage.is-done {
+  opacity: 1;
+}
+
+.lcel-stage.is-active {
+  border-color: var(--module-hue, var(--ink));
+  box-shadow: 0 0 0 1px var(--module-hue, var(--ink));
+}
+
+.lcel-stage-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.lcel-runnable {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lcel-sig {
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+.lcel-value {
+  margin: 0.55rem 0 0;
+  padding: 0.6rem 0.75rem;
+  background: var(--code-bg);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: var(--code-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lcel-stage-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.lcel-stage-pending {
+  margin: 0.4rem 0 0;
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+/* the │ ▼ connector hanging below each stage */
+.lcel-connector {
+  position: absolute;
+  left: 1.4rem;
+  bottom: -1.15rem;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.lcel-stage:not(:last-child) {
+  margin-bottom: 1.4rem;
+}

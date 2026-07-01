@@ -4,7 +4,7 @@ export const agents: Module = {
   id: "agents",
   number: "04",
   title: "Agentic AI Frameworks",
-  hours: 35,
+  hours: 30,
   tagline:
     "A system that calls a tool once is not an agent. A system that plans, acts, observes, and adapts — that is an agent.",
   intro: [
@@ -310,6 +310,12 @@ invoice_tool = {
       title: "Step through an agent thinking",
       lede: "Thought, action, observation — click through a real ReAct trace one frame at a time. Then load the second trace and watch an agent loop forever until the max-iterations guard kills it. Failure modes are first-class content here.",
       afterSession: 0,
+    },
+    {
+      id: "lcel",
+      title: "Compose a chain with the pipe operator",
+      lede: "prompt | model | parser — LangChain's whole composition model in one line. Pick an input and step it through each Runnable, watching the data transform at every link. The pipe isn't syntax sugar; each stage takes the previous stage's output and hands its own forward.",
+      afterSession: 2,
     },
   ],
   concepts: [

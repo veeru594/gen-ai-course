@@ -4,7 +4,7 @@ export const models: Module = {
   id: "models",
   number: "03",
   title: "Generative AI Models & Tool Exploration",
-  hours: 45,
+  hours: 35,
   tagline:
     "Three model families cover every capability category in the market. Learn them deeply, and every new release becomes easy to evaluate.",
   intro: [

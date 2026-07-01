@@ -8,6 +8,40 @@
   color: var(--ink-soft);
 }
 
+.resources-explainers {
+  margin-bottom: 3rem;
+}
+
+.resources-explainers-head {
+  margin-bottom: 1.25rem;
+}
+
+.resources-explainers-head h2 {
+  margin: 0;
+}
+
+.resources-explainers-head p {
+  margin-top: 0.6rem;
+  max-width: 70ch;
+  color: var(--ink-soft);
+}
+
+.resources-listhead {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  padding-top: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.resources-listhead h2 {
+  margin: 0;
+}
+
+.resources-listhead p {
+  margin-top: 0.6rem;
+  max-width: 70ch;
+  color: var(--ink-soft);
+}
+
 .resources-controls {
   display: flex;
   flex-wrap: wrap;

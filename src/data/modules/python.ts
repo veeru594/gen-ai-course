@@ -4,7 +4,7 @@ export const python: Module = {
   id: "python",
   number: "05",
   title: "Python for Generative AI — Integration and Implementation",
-  hours: 45,
+  hours: 30,
   tagline:
     "Part A builds the scripting depth AI work actually uses. Part B embeds Generative AI inside the automation workflows from earlier modules — reliably.",
   intro: [
@@ -363,6 +363,12 @@ print(response.stop_reason, response.usage.input_tokens,
     },
   ],
   demos: [
+    {
+      id: "backoff",
+      title: "Why you wait longer after each failure",
+      lede: "Hit a rate limit and you have two choices: retry immediately, or back off exponentially. Step through both. Hammering the API keeps getting rejected; doubling the wait each time — 1s, 2s, 4s — lets the limit clear and the call succeed. This is the single most common reliability pattern in AI code.",
+      afterSession: 1,
+    },
     {
       id: "contract",
       title: "Validate the model's output before it hurts you",

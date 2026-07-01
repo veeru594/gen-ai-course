@@ -4,7 +4,7 @@ export const foundations: Module = {
   id: "foundations",
   number: "01",
   title: "Generative AI Foundations & LLM Architecture",
-  hours: 50,
+  hours: 35,
   tagline:
     "Everything that follows — prompting, model selection, RAG, agents — is better understood by someone who knows how LLMs actually work.",
   intro: [
@@ -340,6 +340,12 @@ export const foundations: Module = {
       id: "embeddings",
       title: "Meaning becomes geometry",
       lede: "Every term below is placed by how it's used across this curriculum — related ideas end up close together. Click one to see its nearest neighbours by cosine similarity. This is the intuition behind embeddings, vector space, and the retrieval that follows.",
+      afterSession: 1,
+    },
+    {
+      id: "context-window",
+      title: "Watch the context window fill — and overflow",
+      lede: "Add turns to a conversation and watch them stack inside a fixed token budget. When the next turn won't fit, the oldest turns fall out of the window — the model simply stops being able to see them. This single mechanic explains why long chats forget, and why RAG exists.",
       afterSession: 1,
     },
     {
