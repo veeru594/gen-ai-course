@@ -89,8 +89,317 @@
   font-size: 0.95rem;
 }
 
+/* ===== shared lede for the new sections ===== */
+
+.capstone-section-lede {
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin-top: 0.75rem;
+}
+
+/* ===== Section: project sets (tabs) ===== */
+
+.capstone-projects {
+  padding-block: 2.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.capstone-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-block: 1.5rem 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.capstone-tab {
+  appearance: none;
+  border: none;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0.6rem 1rem;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--t-fast) var(--ease);
+}
+
+.capstone-tab:hover {
+  color: var(--ink);
+}
+
+.capstone-tab.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--mark);
+  background: linear-gradient(to top, var(--mark) 0, transparent 45%);
+}
+
+.capstone-tab-count {
+  margin-left: 0.45rem;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+
+.capstone-project-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.capstone-project {
+  padding: 1.25rem 0.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.capstone-project-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.capstone-project-number {
+  color: var(--ink-faint);
+}
+
+.capstone-project-title {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.capstone-project-track {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--paper-sunk);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  margin-left: auto;
+}
+
+.capstone-project-detail {
+  margin: 0.75rem 0 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.capstone-project-detail > div {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.75rem;
+}
+
+.capstone-project-detail dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 0.2rem;
+}
+
+.capstone-project-detail dd {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 72ch;
+}
+
+/* ===== Section: scoring card grid ===== */
+
+.capstone-scoring {
+  padding-block: 2.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.capstone-scoring-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.capstone-scoring-card {
+  padding: 1.25rem;
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--ink);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+}
+
+.capstone-scoring-points {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  display: inline-block;
+  background: linear-gradient(to top, var(--mark) 40%, transparent 40%);
+  padding-inline: 0.15rem;
+}
+
+.capstone-scoring-points span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.capstone-scoring-name {
+  font-size: 1rem;
+  margin-block: 0.6rem 0.4rem;
+}
+
+.capstone-scoring-body {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.capstone-scoring-total {
+  border-top-color: var(--mark);
+  background: var(--paper-sunk);
+}
+
+/* ===== Section: submission checklist ===== */
+
+.capstone-checklist {
+  padding-block: 2.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.capstone-checklist-list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 70ch;
+}
+
+.capstone-checklist-list li {
+  border-top: 1px solid var(--line);
+}
+
+.capstone-checklist-list li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.capstone-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.7rem 0.25rem;
+  cursor: pointer;
+}
+
+.capstone-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.capstone-check-box {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.25rem;
+  border: 2px solid var(--ink-faint);
+  border-radius: var(--radius-s);
+  background: var(--paper-raise);
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.capstone-check:hover .capstone-check-box {
+  border-color: var(--ink);
+}
+
+.capstone-check input:checked + .capstone-check-box {
+  background: var(--mark);
+  border-color: var(--ink);
+}
+
+.capstone-check input:checked + .capstone-check-box::after {
+  content: "✓";
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 0.95rem;
+  text-align: center;
+  color: var(--ink);
+}
+
+.capstone-check input:focus-visible + .capstone-check-box {
+  box-shadow: var(--focus-ring);
+}
+
+.capstone-check-text {
+  font-size: 0.95rem;
+}
+
+.capstone-check input:checked ~ .capstone-check-text {
+  color: var(--ink-soft);
+}
+
+.capstone-checklist-progress {
+  margin-top: 1rem;
+}
+
+/* ===== Section: downloads ===== */
+
+.capstone-downloads {
+  padding-block: 2.5rem 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.capstone-downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 46rem;
+}
+
+.capstone-download-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--mark);
+  border: 1px solid var(--ink);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-s);
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.capstone-download-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ===== responsive ===== */
+
 @media (max-width: 1000px) {
   .capstone-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capstone-scoring-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -98,5 +407,22 @@
 @media (max-width: 560px) {
   .capstone-flow {
     grid-template-columns: 1fr;
+  }
+
+  .capstone-scoring-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capstone-downloads-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .capstone-project-track {
+    margin-left: 0;
+  }
+
+  .capstone-project-detail > div {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
   }
 }
