@@ -647,6 +647,28 @@ export function Capstone() {
         </ol>
       </section>
 
+      {/* ===== SECTION: Full-width notice — own projects + free API keys ===== */}
+      <aside className="capstone-notice" aria-label="Important notes before you pick">
+        <div className="container capstone-notice-inner">
+          <p className="meta capstone-notice-label">READ BEFORE YOU PICK</p>
+          <div className="capstone-notice-items">
+            <p>
+              <strong>Want to build your own project instead?</strong> You can
+              — but you must <strong>inform us first</strong>. The review
+              pipeline is configured per project, and we need to set it up for
+              your idea so it makes no wrong step when scoring your work.
+            </p>
+            <p>
+              <strong>Every project needs API keys — use the free tiers.</strong>{" "}
+              Claude, OpenAI, Gemini, ElevenLabs, and every other service in
+              these briefs offer free API keys that are{" "}
+              <strong>sufficient for building and testing</strong>. Do not pay
+              for anything — use the resources provided.
+            </p>
+          </div>
+        </div>
+      </aside>
+
       {/* ===== SECTION: Evaluation criteria — scoring card grid ===== */}
       <section className="capstone-scoring" aria-labelledby="scoring-heading">
         <h2 id="scoring-heading">How your project is scored</h2>

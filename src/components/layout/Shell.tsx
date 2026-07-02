@@ -19,6 +19,18 @@ export function Shell() {
   }, [pathname, hash]);
 
   useEffect(() => {
+    // a note for whoever opens the console — you know who you are
+    console.log(
+      "%c ↳ you opened the console. of course you did. ",
+      "background:#ffe24a;color:#1a1a1c;font-weight:bold;padding:4px 8px;border-radius:3px;",
+    );
+    console.log(
+      "%c Hey I Am Veeru I Build This Page",
+      "color:#8e8e94;padding:2px 8px;",
+    );
+  }, []);
+
+  useEffect(() => {
     // Module pages own their titles (their effect runs before this one,
     // so writing here would clobber it).
     if (pathname.startsWith("/module/")) {
@@ -42,6 +54,14 @@ export function Shell() {
       <main id="main" className="shell-main">
         <Outlet />
       </main>
+      <footer className="shell-footer">
+        <div className="container shell-footer-inner">
+          <p className="meta">AUTOMATION WITH GENERATIVE AI — 165 HRS</p>
+          <p className="shell-footer-sign" title="every painting is signed">
+            vk &middot; 
+          </p>
+        </div>
+      </footer>
       <CommandPalette />
       <ScrollRestoration />
     </div>

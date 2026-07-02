@@ -227,6 +227,7 @@ export function AsciiHero() {
             : "stream: idle"}
         </span>
         <span>ctx: 200k</span>
+        <span title="signed, the painter">vk.</span>
       </p>
     </section>
   );

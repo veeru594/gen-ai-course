@@ -214,6 +214,41 @@
   max-width: 72ch;
 }
 
+/* ===== Section: full-bleed notice band ===== */
+
+.capstone-notice {
+  /* break out of .container to span the full viewport width */
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  margin-block: 2.5rem;
+  background: var(--mark);
+  border-block: 2px solid var(--ink);
+  padding-block: 2rem;
+}
+
+.capstone-notice-label {
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.capstone-notice-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.capstone-notice-items p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 56ch;
+}
+
+.capstone-notice-items strong {
+  font-weight: 800;
+}
+
 /* ===== Section: scoring card grid ===== */
 
 .capstone-scoring {
@@ -415,6 +450,11 @@
 
   .capstone-downloads-grid {
     grid-template-columns: 1fr;
+  }
+
+  .capstone-notice-items {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .capstone-project-track {

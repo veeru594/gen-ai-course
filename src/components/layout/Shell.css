@@ -7,3 +7,32 @@
 .shell-main {
   flex: 1;
 }
+
+.shell-footer {
+  margin-top: 3rem;
+  border-top: 1px solid var(--line-strong);
+  padding-block: 1.5rem;
+}
+
+.shell-footer-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* the painter's corner — faint until someone leans in */
+.shell-footer-sign {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--line-strong);
+  cursor: default;
+  transition: color var(--t-med) var(--ease);
+}
+
+.shell-footer-sign:hover {
+  color: var(--ink);
+  background: linear-gradient(to top, var(--mark) 40%, transparent 40%);
+}
